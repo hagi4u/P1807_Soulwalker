@@ -11,7 +11,9 @@
   },
   "dependencies": {
     "normalize.css": "^8.0.0",
-    "vue": "^2.5.2"
+    "parallax-js": "^3.1.0",
+    "vue": "^2.5.2",
+    "vue-typed-js": "^0.1.2"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",

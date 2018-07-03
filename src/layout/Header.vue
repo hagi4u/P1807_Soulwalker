@@ -34,7 +34,6 @@ $height: 100px;
   padding-right:10px;
   padding-left:$padding;
 
-  background-color:#E0E0E0;
   &__nav{
     position:absolute;
     top:0;
