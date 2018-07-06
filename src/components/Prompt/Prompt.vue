@@ -4,7 +4,7 @@
     <div class="prompt__content">
       <vue-typed-js 
         v-if="!isToggleTypedComponent && !isClicked"
-        :strings="prompt" 
+        :strings="[prompt]" 
         :typeSpeed="typeSpeed"
         :showCursor="false"
         @preStringTyped="handleStartTyping()"
@@ -13,10 +13,10 @@
       >
         <p class="prompt__typing typing" @click="handleClickPrompt()"></p>
       </vue-typed-js>
-      <p class="prompt__typing typing" v-else-if="isClicked" v-html="prompt[0]">
+      <p class="prompt__typing typing" v-else-if="isClicked" v-html="prompt">
       </p>
-      <Button class="prompt__buttons prompt__buttons--prev" @click="handlePrevButtonClick()" v-if="!isMe && !isButtonsHide">PREV</button>
-      <Button class="prompt__buttons prompt__buttons--next" @click="handleNextButtonClick()" v-if="!isButtonsHide">NEXT</Button>
+      <Button class="prompt__buttons prompt__buttons--prev" @click="handlePrevButtonClick()" v-if="isShownPrevButton">PREV</button>
+      <Button class="prompt__buttons prompt__buttons--next" @click="handleNextButtonClick()" v-if="isShownNextButton">NEXT</Button>
     </div>
   </div>
 </template>
@@ -26,7 +26,9 @@
   import { VueTypedJs } from 'vue-typed-js'
   
   import Button from '@/components/Buttons/Button';
-  import Sound from '@/utils/sounds.js';
+  
+  import EventBus from '@/utils/eventBus';
+  import Sound from '@/utils/sounds';
 
   Vue.use(VueTypedJs);
   export default {
@@ -40,12 +42,14 @@
         default: '사용자'
       },
       prompt: {
-        type: Array,
-        default() {
-          return ['야옹야옹야옹 <br> 줄바꾸고 야옹야옹']
-        }
+        type: String,
+        default: '야옹야옹야옹 <br> 줄바꾸고 야옹야옹'
       },
       isMe: {
+        type: Boolean,
+        default: false
+      },
+      isLastPrompt: {
         type: Boolean,
         default: false
       }
@@ -75,17 +79,33 @@
         this.isClicked = true;
         this.handleCompleteTyping();
       },
-      handleNextButtonClick(){
+      handleNextButtonClick(e){
         this.isToggleTypedComponent = true;
         this.isClicked = false;
         this.isButtonsHide = true;
-        this.$emit('changedPrompt', {copy : '카피넥스트카피넥스트카피넥스트카피넥스트카피넥스트카피넥스트카피넥스트카피넥스트카피넥스트카피넥스트카피넥스트'});
+        
+        EventBus.$emit('nextPrompt', e);
       },
-      handlePrevButtonClick(){
+      handlePrevButtonClick(e){
         this.isToggleTypedComponent = true;
         this.isClicked = false;
         this.isButtonsHide = true;
-        this.$emit('changedPrompt', {copy : '카피프리브카피프리브카피프리브카피프리브카피프리브카피프리브카피프리브카피프리브카피프리브카피프리브카피프리브카피프리브'});
+
+        EventBus.$emit('prevPrompt', e);
+      }
+    },
+    computed:{
+      isShownPrevButton(){
+        if(this.isLastPrompt){
+          return false
+        }
+        return !this.isMe && !this.isButtonsHide;
+      },
+      isShownNextButton(){
+        if(this.isLastPrompt){
+          return false;
+        }
+        return !this.isButtonsHide;
       }
     }
   }

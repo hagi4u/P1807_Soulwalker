@@ -8,12 +8,19 @@ export default {
   button: new Audio(ButtonSound),
 
   isMute: false,
+  isPrevented: false,
 
   play(type){
     if(this.isMute){
       return true;
     }
-    this[type].play();
+    const soundBufPromise = this[type].play();
+    
+    if(soundBufPromise != undefined){
+      soundBufPromise
+      .then(_ => this.isPrevented = false)
+      .catch(error => this.isPrevented = true);
+    }
   },
 
   stop(type){

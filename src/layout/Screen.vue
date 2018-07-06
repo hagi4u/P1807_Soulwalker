@@ -1,24 +1,35 @@
 <template>
   <main>
-    <Prompt :prompt="copy" @changedPrompt="handleChangePrompt"/>
+    <!--
+      n-Layer ScreenComponent
+      v-if="!isLastPrompt"
+    -->
+    <!-- 
+      Question Component
+      v-if="isLastPrompt"
+    -->
+    <Prompt :user="currentPrompt.user" :prompt="currentPrompt.prompt" :isMe="isMe" :isLastPrompt="isLastPrompt"/>
   </main>
 </template>
 
 <script>
   import Prompt from '../components/Prompt/Prompt.vue';
   export default {
+    props: ['scene', 'promptIdx', 'isLastPrompt'],
     components: {
-      Prompt
+      Prompt,
     },
     data(){
-      return {
-        copy: ['야옿야옿햐오햐']
-      }
+      return {}
     },
-    methods: {
-      handleChangePrompt(value){
-        // 해당되는 screens 의 json데이터를 받은 상태에서 props 만 내려버리기
-        this.copy[0] = value.copy;
+    computed:{
+      isMe(){
+        return this.scene.prompt[this.promptIdx].user === '나'
+      },
+      currentPrompt(){
+        return {
+          ...this.scene.prompt[this.promptIdx]
+        }
       }
     }
   }
