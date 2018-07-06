@@ -25,7 +25,7 @@ export default {
   },
   mounted(){
     Sound.bg.loop = true;
-    Sound.play('bg');
+    // Sound.play('bg');
   },
   destroyed(){
     Sound.stop('bg');
