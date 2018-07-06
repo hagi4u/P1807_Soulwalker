@@ -3,13 +3,17 @@
     <Header class="app__header"/>
     <Screen class="app__screen"/>
     <BG type="4"/>
+    <Copyright/>
   </div>
 </template>
 
 <script>
-import BG from './components/Common/BG.vue';
-import Header from './layout/Header.vue';
-import Screen from './layout/Screen.vue';
+import Header from '@/layout/Header.vue';
+import Screen from '@/layout/Screen.vue';
+import Copyright from '@/layout/Copyright.vue';
+
+import BG from '@/components/Common/BG.vue';
+import Sound from '@/utils/sounds.js';
 
 export default {
   name: 'App',
@@ -17,6 +21,14 @@ export default {
     Header,
     Screen,
     BG,
+    Copyright
+  },
+  mounted(){
+    Sound.bg.loop = true;
+    Sound.play('bg');
+  },
+  destroyed(){
+    Sound.stop('bg');
   }
 }
 </script>

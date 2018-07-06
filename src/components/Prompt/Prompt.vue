@@ -15,8 +15,8 @@
       </vue-typed-js>
       <p class="prompt__typing typing" v-else-if="isClicked" v-html="prompt[0]">
       </p>
-      <button class="prompt__buttons prompt__buttons--prev" @click="handlePrevButtonClick()" v-if="!isMe && !isButtonsHide">PREV</button>
-      <button class="prompt__buttons prompt__buttons--next" @click="handleNextButtonClick()" v-if="!isButtonsHide">NEXT</button>
+      <Button class="prompt__buttons prompt__buttons--prev" @click="handlePrevButtonClick()" v-if="!isMe && !isButtonsHide">PREV</button>
+      <Button class="prompt__buttons prompt__buttons--next" @click="handleNextButtonClick()" v-if="!isButtonsHide">NEXT</Button>
     </div>
   </div>
 </template>
@@ -24,12 +24,15 @@
 <script>
   import Vue from 'vue/dist/vue.js';
   import { VueTypedJs } from 'vue-typed-js'
+  
+  import Button from '@/components/Buttons/Button';
+  import Sound from '@/utils/sounds.js';
 
-  Vue.use(VueTypedJs)
-
+  Vue.use(VueTypedJs);
   export default {
     components: {
-      VueTypedJs
+      VueTypedJs,
+      Button
     },
     props: {
       user: {
@@ -56,27 +59,21 @@
       }
     },
     updated(){
-      console.log('updated')
-
       if(this.isToggleTypedComponent){
         this.isToggleTypedComponent = false;
       }
-
-      // if(this.isClicked){
-      //   this.isClicked = false;
-      // }
     },
     methods: {
       handleStartTyping(){
-        console.log('키보드 두드리는 소리 시작')
+        Sound.play('typeWritter');
       },
       handleCompleteTyping(){
-        console.log('키보드 두드리는 소리 끝')
         this.isButtonsHide = false;
+        Sound.stop('typeWritter');
       },
       handleClickPrompt(){
         this.isClicked = true;
-        this.isButtonsHide = false;
+        this.handleCompleteTyping();
       },
       handleNextButtonClick(){
         this.isToggleTypedComponent = true;
