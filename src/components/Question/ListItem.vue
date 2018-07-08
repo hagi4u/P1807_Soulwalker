@@ -2,7 +2,6 @@
   <div class="question-item">
     <span class="question-item__index">{{index + 1}}</span>
     <p class="question-item__contents">{{data.question}}</p>
-
     <button class="question-item__button" @click="handleClick">선택</button>
   </div>
 </template>

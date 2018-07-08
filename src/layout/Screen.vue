@@ -4,15 +4,14 @@
       n-Layer ScreenComponent
       v-if="!isLastPrompt"
     -->
-    <!-- 
-      Question Component
-      
-    -->
+    
+    <!-- Question Component -->
     <Question 
       v-if="isLastPrompt"
       :question="scene.question"
       @onQuestionClick="handleQuestionClick"
     />
+    <!-- Prompt Component -->
     <template v-if="!isUpdatedScreen">
       <Prompt 
         :user="currentPrompt.user" 

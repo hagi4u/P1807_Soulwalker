@@ -9,7 +9,7 @@
         @before-enter="beforeEnter"
         @enter="enter"
         @after-enter="afterEnter"
-        
+
         appear>
         <QuestiomItem class="question__item" 
           :index="index" 
@@ -36,23 +36,8 @@
           return [
             {
                 "cid": "0",
-                "question": "당연히 알지! 내가 소매 넣기 상습범인데 ^^:;",
-                "target_cid": "1"
-            },
-            {
-                "cid": "0",
-                "question": "소울워커? 알지! 근데 아직은 청정 암반수야 ㅎㅎ",
-                "target_cid": "1"
-            },
-            {
-                "cid": "0",
-                "question": "이름만 들어 봤어..",
-                "target_cid": "2"
-            },
-            {
-                "cid": "0",
-                "question": "그게 뭔 데?..",
-                "target_cid": "2"
+                "question": "질문",
+                "target_cid": "0"
             }
           ]
         }
@@ -60,7 +45,7 @@
     },
     data(){
       return {
-        itemIndex: 0
+        listItemIndex: 0
       }
     },
     methods: {
@@ -75,13 +60,13 @@
           y: 0, 
           opacity:1, 
           ease: Power4.easeInOut, 
-          delay: 0.2 * this.itemIndex,
+          delay: 0.2 * this.listItemIndex,
           onComplete: done
         });
-        this.itemIndex = this.itemIndex + 1
+        this.listItemIndex = this.listItemIndex + 1
       },
       afterEnter(el){
-        this.itemIndex = 0;        
+        this.listItemIndex = 0;        
       }
     }
   }
