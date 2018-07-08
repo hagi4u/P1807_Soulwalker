@@ -19,7 +19,8 @@ export default {
     return this.scenario;
   },
   getNode(cid = this.currentNodeId){
-    const index = this.scenario.findIndex(item => parseInt(item.cid) === cid);
+    const index = this.scenario.findIndex(item => parseInt(item.cid) === parseInt(cid));
+    
     return {
       ...this.scenario[index],
       prompt: this.scenario[index].prompt.map(item => {

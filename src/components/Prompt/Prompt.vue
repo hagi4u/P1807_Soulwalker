@@ -25,9 +25,8 @@
   import Vue from 'vue/dist/vue.js';
   import { VueTypedJs } from 'vue-typed-js'
   
-  import Button from '@/components/Buttons/Button';
+  import Button from '@/components/Buttons/Button';  
   
-  import EventBus from '@/utils/eventBus';
   import Sound from '@/utils/sounds';
 
   Vue.use(VueTypedJs);
@@ -44,6 +43,10 @@
       prompt: {
         type: String,
         default: '야옹야옹야옹 <br> 줄바꾸고 야옹야옹'
+      },
+      promptIdx: {
+        type: Number,
+        default: 0
       },
       isMe: {
         type: Boolean,
@@ -84,20 +87,23 @@
         this.isClicked = false;
         this.isButtonsHide = true;
         
-        EventBus.$emit('nextPrompt', e);
+        this.$emit('onNextButtonClick', e);
       },
       handlePrevButtonClick(e){
         this.isToggleTypedComponent = true;
         this.isClicked = false;
         this.isButtonsHide = true;
 
-        EventBus.$emit('prevPrompt', e);
+        this.$emit('onPrevButtonClick', e);
       }
     },
     computed:{
       isShownPrevButton(){
         if(this.isLastPrompt){
           return false
+        }
+        if(this.promptIdx === 0){
+          return false;
         }
         return !this.isMe && !this.isButtonsHide;
       },

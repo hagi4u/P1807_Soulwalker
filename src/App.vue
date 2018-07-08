@@ -1,11 +1,7 @@
 <template>
   <div class="app">
-    <Header class="app__header"/>
-    <Screen class="app__screen" 
-      :scene="scene" 
-      :promptIdx="promptIdx"
-      :isLastPrompt="isLastPrompt"
-    />
+    <Header class="app__header" @onMute="handleMute"/>
+    <Screen class="app__screen" :scene="scene" :promptIdx="promptIdx" :isLastPrompt="isLastPrompt"/>
     <BG type="4"/>
     <Copyright/>
   </div>
@@ -39,6 +35,20 @@ export default {
     BG,
     Copyright
   },
+  methods: {
+    handleMute(boolean = true){
+      Sound.setMute(boolean);
+    }
+  },
+  watch: {
+    promptIdx(){
+      this.isLastPrompt = Engine.isLastPrompt();
+    },
+    scene(){
+      this.promptIdx = Engine.currentPromptId;
+      this.isLastPrompt = false;
+    }
+  },
   mounted(){
     Sound.bg.loop = true;
     Sound.play('bg');
@@ -46,14 +56,18 @@ export default {
     EventBus.$on('nextPrompt', () => {
       Engine.nextPrompt();
       this.promptIdx = Engine.currentPromptId;
-      this.isLastPrompt = Engine.isLastPrompt();
     });
 
     EventBus.$on('prevPrompt', () => {
       Engine.prevPrompt();
       this.promptIdx = Engine.currentPromptId;
-      this.isLastPrompt = Engine.isLastPrompt();
     });
+
+    EventBus.$on('goToNode', (cid) => {
+      Engine.goToNode(cid);
+      this.scene = Engine.getNode(cid);
+    })
+
   },
   destroyed(){
     Sound.stop('bg');
@@ -62,6 +76,7 @@ export default {
 </script>
 
 <style lang="scss">
+  @import '@/utils/sass/base/reset.scss';
   h1,h2,h3,h4,h5,h6{
     padding:0;
     margin:0;
@@ -86,6 +101,12 @@ export default {
       right:0;
       left:0;
       z-index:10;
+
+      // min-width:720px;
+      max-width:720px;
+
+      margin-right:auto;
+      margin-left:auto;
     }
   }
 </style>

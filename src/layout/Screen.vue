@@ -6,21 +6,42 @@
     -->
     <!-- 
       Question Component
-      v-if="isLastPrompt"
+      
     -->
-    <Prompt :user="currentPrompt.user" :prompt="currentPrompt.prompt" :isMe="isMe" :isLastPrompt="isLastPrompt"/>
+    <Question 
+      v-if="isLastPrompt"
+      :question="scene.question"
+      @onQuestionClick="handleQuestionClick"
+    />
+    <template v-if="!isUpdatedScreen">
+      <Prompt 
+        :user="currentPrompt.user" 
+        :prompt="currentPrompt.prompt"
+        :promptIdx="currentPrompt.promptIdx"
+        :isMe="isMe" 
+        :isLastPrompt="isLastPrompt"
+        @onNextButtonClick="handleNextPromptClick"
+        @onPrevButtonClick="handlePrevPromptClick"
+      />
+    </template>
   </main>
 </template>
 
 <script>
-  import Prompt from '../components/Prompt/Prompt.vue';
+  import Prompt from '@/components/Prompt/Prompt';
+  import Question from '@/components/Question/List';
+
+  import EventBus from '@/utils/eventBus';
   export default {
     props: ['scene', 'promptIdx', 'isLastPrompt'],
     components: {
       Prompt,
+      Question
     },
     data(){
-      return {}
+      return {
+        isUpdatedScreen: false
+      }
     },
     computed:{
       isMe(){
@@ -28,8 +49,26 @@
       },
       currentPrompt(){
         return {
-          ...this.scene.prompt[this.promptIdx]
+          ...this.scene.prompt[this.promptIdx],
+          promptIdx: this.promptIdx
         }
+      }
+    },
+    methods: {
+      handleQuestionClick({index, data}){
+        EventBus.$emit('goToNode', data.target_cid);
+        this.isUpdatedScreen = true;
+      },
+      handleNextPromptClick(e){
+        EventBus.$emit('nextPrompt', e);
+      },
+      handlePrevPromptClick(e){
+        EventBus.$emit('prevPrompt', e);
+      }
+    },
+    beforeUpdate() {
+      if(this.isUpdatedScreen){
+        this.isUpdatedScreen = false;
       }
     }
   }
