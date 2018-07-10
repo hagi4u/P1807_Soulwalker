@@ -30,5 +30,9 @@ export default {
 
   setMute(boolean){
     this.isMute = boolean;
+
+    this.bg.muted = boolean;
+    this.typeWritter.muted = boolean;
+    this.button.muted = boolean;
   }
 }

@@ -18,7 +18,7 @@ import EventBus from '@/utils/eventBus';
 import Engine from '@/utils/engine';
 import Sound from '@/utils/sounds';
 
-Sound.setMute(true);
+// Sound.setMute(true);
 
 export default {
   name: 'App',
@@ -87,6 +87,7 @@ export default {
     position:relative;
     width:100%;
     height:100%;
+    font-family: 'Nanum Gothic', sans-serif;
   }
 
   .app{
@@ -96,7 +97,7 @@ export default {
     }
     &__screen{
       position:absolute;
-      top:0;
+      top:100px;
       bottom:0;
       right:0;
       left:0;

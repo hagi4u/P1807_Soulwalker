@@ -15,13 +15,22 @@
       <a href="http://soulworker.game.onstove.com/" target="_blank">
         <img src="http://placehold.it/150x40" alt="홈페이지 바로가기">
       </a>
+      <MuteSwitch @click="handleMuteClick"/>
     </nav>
   </header>
 </template>
 
 <script>
+  import MuteSwitch from '@/components/Switch/Switch';
   export default {
-    
+    components: {
+      MuteSwitch
+    },
+    methods: {
+      handleMuteClick(boolean){
+        this.$emit('onMute', boolean)
+      }
+    }
   }
 </script>
 
