@@ -17,6 +17,7 @@
         :user="currentPrompt.user" 
         :prompt="currentPrompt.prompt"
         :promptIdx="currentPrompt.promptIdx"
+        :isLastScene="!!scene.goal_cid && scene.question.length === 0"
         :isMe="isMe" 
         :isLastPrompt="isLastPrompt"
         @onNextButtonClick="handleNextPromptClick"

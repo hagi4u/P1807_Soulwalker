@@ -52,6 +52,10 @@
         type: Boolean,
         default: false
       },
+      isLastScene: {
+        type: Boolean,
+        default: false
+      },
       isLastPrompt: {
         type: Boolean,
         default: false
@@ -99,15 +103,12 @@
     },
     computed:{
       isShownPrevButton(){
-        if(this.isLastPrompt){
-          return false
-        }
-        if(this.promptIdx === 0){
-          return false;
-        }
         return !this.isMe && !this.isButtonsHide;
       },
       isShownNextButton(){
+        if(this.isLastScene && !this.isButtonsHide){
+          return true;
+        }
         if(this.isLastPrompt){
           return false;
         }

@@ -9,11 +9,13 @@ isFinishTraversal = node => !node.hasOwnProperty('question') || node.question.le
 */
 
 import scenario from '@/assets/scenario.json';
+const initialHistory = [];
 
 export default {
   scenario,
-  currentNodeId: 0,
+  history: initialHistory,
   currentPromptId: 0,
+  currentNodeId: initialHistory[initialHistory.length - 1] || 0,
 
   getNodes(){
     return this.scenario;
@@ -33,15 +35,33 @@ export default {
   },
   // question에서 실행 되어야 하는 코드
   goToNode(cid){
+    this.history.push(parseInt(this.currentNodeId));
+
     this.currentNodeId = cid;
     this.currentPromptId = 0;
+
+    return this;
+  },
+  goToParentNode(cid = this.history[this.history.length - 1]){
+    this.currentPromptId = this.getNode(cid).prompt.length - 1;
+    this.currentNodeId = cid; 
+
+    this.history.pop();    
+    return this;
   },
   // prompt에서 실행 되어야 하는 코드 (다음 프롬프트로 이동)
   nextPrompt(){
+    if(this.currentPromptId === this.getNode().prompt.length - 1){
+      return this.currentPromptId
+    }
     return ++this.currentPromptId;
   },
   // prompt에서 실행 되어야 하는 코드 (이전 프롬프트로 이동)
   prevPrompt(){
+    if(this.currentPromptId === 0){
+      this.goToParentNode();
+      return true;
+    }
     return --this.currentPromptId;
   },
   // prompt에서 실행 되어야 하는 코드 (마지막 프롬프트 인 경우)

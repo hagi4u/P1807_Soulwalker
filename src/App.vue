@@ -1,7 +1,18 @@
 <template>
   <div class="app">
     <Header class="app__header" @onMute="handleMute"/>
-    <Screen class="app__screen" :scene="scene" :promptIdx="promptIdx" :isLastPrompt="isLastPrompt"/>
+    <SystemScreen
+      @click="handleSystemScreenClick"
+      v-if="scene.prompt[promptIdx].user === 'system'">
+      System Screen
+    </SystemScreen>
+    <Screen class="app__screen" 
+      :scene="scene" 
+      :promptIdx="promptIdx" 
+      :isLastPrompt="isLastPrompt"
+      
+      v-else
+    />
     <BG type="4"/>
     <Copyright/>
   </div>
@@ -9,6 +20,7 @@
 
 <script>
 import Header from '@/layout/Header.vue';
+import SystemScreen from '@/layout/SystemScreen';
 import Screen from '@/layout/Screen.vue';
 import Copyright from '@/layout/Copyright.vue';
 
@@ -25,19 +37,29 @@ export default {
   data() {
     return {
       scene: Engine.getNode(),
+      resultId: false,
+      isLastPrompt: false,
       promptIdx: 0,
-      isLastPrompt: false
+      history: Engine.history,
     }
   },
   components: {
     Header,
     Screen,
+    SystemScreen,
     BG,
     Copyright
   },
   methods: {
     handleMute(boolean = true){
       Sound.setMute(boolean);
+    },
+    handleChangeEndingScene( cid = 100 ){
+      this.resultId = this.scene.goal_cid;
+      this.scene = Engine.goToNode(cid).getNode();
+    },
+    handleSystemScreenClick(){
+      EventBus.$emit('nextPrompt');
     }
   },
   watch: {
@@ -46,7 +68,7 @@ export default {
     },
     scene(){
       this.promptIdx = Engine.currentPromptId;
-      this.isLastPrompt = false;
+      this.isLastPrompt = Engine.isLastPrompt();
     }
   },
   mounted(){
@@ -54,18 +76,34 @@ export default {
     Sound.play('bg');
 
     EventBus.$on('nextPrompt', () => {
+      if(this.isLastPrompt && this.scene.goal_cid){
+        return this.handleChangeEndingScene();
+      }
+      
       Engine.nextPrompt();
       this.promptIdx = Engine.currentPromptId;
     });
 
     EventBus.$on('prevPrompt', () => {
       Engine.prevPrompt();
+
+      if(this.promptIdx === 0){
+        this.scene = Engine.getNode();
+      }
+      
       this.promptIdx = Engine.currentPromptId;
     });
 
     EventBus.$on('goToNode', (cid) => {
-      Engine.goToNode(cid);
-      this.scene = Engine.getNode(cid);
+      if(this.scene.goal_cid){
+        return this.handleChangeEndingScene();
+      }
+
+      this.scene = Engine.goToNode(cid).getNode(cid);
+    });
+    
+    EventBus.$on('goPrevNode', () => {
+      this.scene = Engine.goToParentNode().getNode();
     })
 
   },
