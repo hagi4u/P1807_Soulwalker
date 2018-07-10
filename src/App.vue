@@ -65,6 +65,12 @@ export default {
   watch: {
     promptIdx(){
       this.isLastPrompt = Engine.isLastPrompt();
+
+      if(this.scene.prompt[this.promptIdx].user === 'system'){
+        setTimeout(() => {
+          EventBus.$emit('nextPrompt');
+        }, 1500)
+      }
     },
     scene(){
       this.promptIdx = Engine.currentPromptId;
