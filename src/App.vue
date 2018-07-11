@@ -8,7 +8,7 @@
     </SystemScreen>
     <Screen class="app__screen" 
       :scene="scene" 
-      :promptIdx="promptIdx" 
+      :promptIdx="promptIdx"
       :isLastPrompt="isLastPrompt"
       
       v-else
@@ -56,10 +56,26 @@ export default {
     },
     handleChangeEndingScene( cid = 100 ){
       this.resultId = this.scene.goal_cid;
-      this.scene = Engine.goToNode(cid).getNode();
+      this.scene = JSON.parse(JSON.stringify(Engine.goToNode(cid).getNode()).replace('[END_GOAL]', this.getEndingCopy()));
     },
     handleSystemScreenClick(){
       EventBus.$emit('nextPrompt');
+    },
+    getEndingCopy() {
+      if(!this.resultId){
+        return null
+      }
+
+      // 조금 더 똑똑하게 할 수 있음 (우선 여기다가 텍스트 넣는걸로..)
+      if(this.resultId == 101 || this.resultId == 111){
+        return '짜잔!! 화끈한 액션을 좋아하는 우리 오빠를 위한'
+      }
+      if(this.resultId == 102 || this.resultId == 112){
+        return '짜잔!! 스타일에 죽고 스타일에 사는 우리 오빠를 위한'
+      }
+      if(this.resultId == 103 || this.resultId == 113){
+        return '짜잔!! 럭셔리한 우리 오빠의 마이룸을 위해'
+      }
     }
   },
   watch: {
@@ -67,7 +83,7 @@ export default {
       this.isLastPrompt = Engine.isLastPrompt();
 
       if(this.scene.prompt[this.promptIdx].user === 'system'){
-        setTimeout(() => {
+        this.delayBuffer = setTimeout(() => {
           EventBus.$emit('nextPrompt');
         }, 1500)
       }
@@ -84,6 +100,9 @@ export default {
     EventBus.$on('nextPrompt', () => {
       if(this.isLastPrompt && this.scene.goal_cid){
         return this.handleChangeEndingScene();
+      }
+      if(this.delayBuffer){
+        clearTimeout(this.delayBuffer)
       }
       
       Engine.nextPrompt();
