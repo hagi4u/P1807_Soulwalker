@@ -140,13 +140,18 @@
 </script>
 
 <style lang="scss">
-  @import '../../utils/sass/layouts/bem.scss';
+  @import '@/utils/sass/layouts/bem.scss';
+  @import '@/utils/sass/layouts/mediaquery.scss';
   .prompt{
     position:absolute;
     width:661px;
     top:50%;
     left:50%;
+    -ms-transform:translateX(-50%);
     transform:translateX(-50%);
+    @include breakpoint(max-width, 1440px){
+      top:60%;
+    }
     @include e('user'){
       position: absolute;
       top: 15px;

@@ -22,7 +22,8 @@
 </template>
 
 <script>
-  import {TweenMax, Power4} from 'gsap';
+  import TweenLite from 'gsap/TweenLite';
+  import { Power4 }  from 'gsap/TweenLite';
   import QuestiomItem from './ListItem';
   export default {
     name: 'Question',
@@ -53,10 +54,10 @@
         this.$emit('onQuestionClick', value);
       },
       beforeEnter(el){    
-        TweenMax.set(el, {y: -15, opacity:0});
+        TweenLite.set(el, {y: -15, opacity:0});
       },
       enter(el, done){
-        TweenMax.to(el, 0.7, {
+        TweenLite.to(el, 0.7, {
           y: 0, 
           opacity:1, 
           ease: Power4.easeInOut, 

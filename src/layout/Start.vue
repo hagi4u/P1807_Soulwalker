@@ -56,7 +56,12 @@
 <script>
   import Vue from 'vue/dist/vue.js';
   import { VueTypedJs } from 'vue-typed-js'
-  import {TweenLite, TimelineMax, Power0} from 'gsap';
+  // import {TweenLite, TimelineMax, Power0} from 'gsap';
+
+  import TweenLite from 'gsap/TweenLite';
+  import TimelineMax from 'gsap/TimelineMax';
+  import { Power0 }  from 'gsap/TweenMax';
+
   import Parallax from 'parallax-js';
 
   import EventBus from '@/utils/eventBus';
@@ -76,16 +81,16 @@
     },
     methods: {
       beforeEnterShape(el){
-        this.shapeTimeline.add(TweenLite.to(el, 3, {x: 10,y: -40, ease: Power0.Linear}));
-        this.shapeTimeline.add(TweenLite.to(el, 3, {x: 0,y: 0, ease: Power0.Linear}));
+        this.shapeTimeline.add(TweenLite.to(el, 3, {x: 10,y: -40}));
+        this.shapeTimeline.add(TweenLite.to(el, 3, {x: 0,y: 0}));
       },
       enterShape(el){
         this.shapeTimeline.play();
       },
 
       beforeEnterBlur(el){
-        this.blurTimeline.add(TweenLite.to(el, 7, {x: 60,y: 80, ease: Power0.Linear}));
-        this.blurTimeline.add(TweenLite.to(el, 7, {x: 0,y: 0, ease: Power0.Linear}));
+        this.blurTimeline.add(TweenLite.to(el, 7, {x: 60,y: 80}));
+        this.blurTimeline.add(TweenLite.to(el, 7, {x: 0,y: 0}));
       },
       enterBlur(el){
         this.blurTimeline.play();

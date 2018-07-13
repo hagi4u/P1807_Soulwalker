@@ -106,10 +106,8 @@ export default {
     promptIdx(){
       this.isLastPrompt = Engine.isLastPrompt();
 
-
       if(this.scene.prompt[this.promptIdx].prompt === '$saving'){
         this.gameState = 'saving';
-        console.log('saving 단계')
       }
 
       if(this.scene.prompt[this.promptIdx].user === 'system'){
