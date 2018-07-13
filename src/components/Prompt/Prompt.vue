@@ -145,7 +145,7 @@
   .prompt{
     position:absolute;
     width:661px;
-    top:50%;
+    top:55%;
     left:50%;
     -ms-transform:translateX(-50%);
     transform:translateX(-50%);

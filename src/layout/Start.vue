@@ -159,7 +159,10 @@
       top: 60px;
       left: 50px;
       font-size: 40px;
-
+      display:block;
+      >p{
+        display:inline-block;
+      }
     }
     @include e('btn-start'){
       position:absolute;
