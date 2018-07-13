@@ -14,7 +14,7 @@
       v-else
     />
     <BG type="4"/>
-    <Copyright/>
+    <Footer/>
   </div>
 </template>
 
@@ -22,7 +22,7 @@
 import Header from '@/layout/Header.vue';
 import SystemScreen from '@/layout/SystemScreen';
 import Screen from '@/layout/Screen.vue';
-import Copyright from '@/layout/Copyright.vue';
+import Footer from '@/layout/Footer.vue';
 
 import BG from '@/components/Common/BG.vue';
 
@@ -48,7 +48,7 @@ export default {
     Screen,
     SystemScreen,
     BG,
-    Copyright
+    Footer
   },
   methods: {
     handleMute(boolean = true){
@@ -158,7 +158,7 @@ export default {
     }
     &__screen{
       position:absolute;
-      top:100px;
+      top:0;
       bottom:0;
       right:0;
       left:0;
