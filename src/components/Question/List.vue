@@ -75,6 +75,7 @@
 
 <style lang="scss">
   @import '@/utils/sass/layouts/bem.scss';
+  @import '@/utils/sass/layouts/mediaquery.scss';
 
   .question{
     position:absolute;
@@ -83,6 +84,10 @@
     transform: translateX(-50%);
     @include e('item'){
 
+    }
+
+    @include breakpoint(max-height, 720px){
+      top:88px;
     }
   }
 </style>

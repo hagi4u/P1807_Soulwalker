@@ -152,6 +152,10 @@
     @include breakpoint(max-width, 1440px){
       top:60%;
     }
+    @include breakpoint(max-height, 720px){
+      top:55%;
+    }
+
     @include e('user'){
       position: absolute;
       top: 15px;
