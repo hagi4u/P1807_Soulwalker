@@ -56,12 +56,14 @@ export default {
     },
     handleChangeEndingScene( cid = 100 ){
       this.resultId = this.scene.goal_cid;
-      this.scene = JSON.parse(JSON.stringify(Engine.goToNode(cid).getNode()).replace('[END_GOAL]', this.getEndingCopy()));
+      this.scene = JSON.parse(JSON.stringify(Engine.goToNode(cid).getNode()).replace('[END_GOAL]', this.endingCopy));
     },
     handleSystemScreenClick(){
       EventBus.$emit('nextPrompt');
-    },
-    getEndingCopy() {
+    }
+  },
+  computed: {
+    endingCopy(){
       if(!this.resultId){
         return null
       }
@@ -140,10 +142,6 @@ export default {
 
 <style lang="scss">
   @import '@/utils/sass/base/reset.scss';
-  h1,h2,h3,h4,h5,h6{
-    padding:0;
-    margin:0;
-  }
   html,
   body,
   .app{

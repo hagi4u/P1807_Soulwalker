@@ -2,10 +2,10 @@
   <div>
     <Button @click="handleClick">
       <template v-if="isMuted">
-        음악 켜기
+        <img src="@/assets/images/common/ico_music_on.png" alt="ON">
       </template>
       <template v-else>
-        음악 끄기
+        <img src="@/assets/images/common/ico_music_off.png" alt="OFF">
       </template>
     </Button>
   </div>
@@ -19,19 +19,17 @@
     },
     data(){
       return {
-        isMuted: true
+        isMuted: false
       }
     },
     methods: {
-      handleClick(boolean = !this.isMuted){
-        this.isMuted = boolean;
+      handleClick(){
+        this.isMuted = !this.isMuted;
         this.$emit('click', this.isMuted);
       }
     },
     mounted(){
-      if(this.isMuted){
-        this.handleClick(true);
-      }
+      this.handleClick();
     }
   }
 </script>
