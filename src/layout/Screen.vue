@@ -69,9 +69,10 @@
       }
     },
     watch:{
-      isShownCharacterSelector(){
-        this.isComputedLastPrompt = this.isShownCharacterSelector ? true : false
-      }
+      // 잠깐 보류 (isLastPrompt 가 제대로 먹히지 않는다, 다른 방법으로 해보기)
+      // isShownCharacterSelector(){
+      //   this.isComputedLastPrompt = this.isShownCharacterSelector ? true : this.isLastPrompt ? true : false
+      // }
     },
     methods: {
       handleQuestionClick({index, data}){

@@ -77,11 +77,9 @@
 
   .question{
     position:absolute;
-    top:50%;
+    top:158px;
     left:50%;
-    transform: translate(-50%, -50%);
-    
-    background-color:#FFF;
+    transform: translateX(-50%);
     @include e('item'){
 
     }

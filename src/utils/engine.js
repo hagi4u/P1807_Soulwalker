@@ -28,9 +28,15 @@ export default {
       prompt: this.scenario[index].prompt.map(item => {
         return {
           ...item,
-          prompt: item.prompt.replace(/\|+/gi, '<br/>')
+          prompt: item.prompt.replace(/\|+/gi, '<br/>'),
         }
-      })
+      }),
+      question: this.scenario[index].question.map(item => {
+        return {
+          ...item,
+          question: item.question.replace(/\|+/gi, '<br/>'),
+        }
+      }),
     };
   },
   // question에서 실행 되어야 하는 코드

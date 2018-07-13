@@ -161,7 +161,8 @@
       width: 562px;
       height: 142px;
       top: 60px;
-      left: 56px;
+      left: 54px;
+      letter-spacing: -1px;
     }
     @include e('typing'){
       line-height: 1.5;
