@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Button @click="handleClick">
+    <Button @click="handleClick()">
       <template v-if="isMuted">
         <img src="@/assets/images/common/ico_music_on.png" alt="ON">
       </template>
@@ -13,23 +13,33 @@
 
 <script>
   import Button from '@/components/Buttons/Button'
+  import EventBus from '@/utils/eventBus';
+  import Sound from '@/utils/sounds';
   export default {
     components: {
       Button
     },
     data(){
       return {
-        isMuted: false
+        isMuted: true
       }
     },
     methods: {
-      handleClick(){
-        this.isMuted = !this.isMuted;
+      handleClick(boolean = !this.isMuted){
+        this.isMuted = boolean;
         this.$emit('click', this.isMuted);
+        
+        Sound.setMute(boolean);
+
+        if(!boolean){
+          Sound.play('bg');
+        } 
       }
     },
     mounted(){
-      this.handleClick();
+      EventBus.$on('toggleSound', (boolean) => {
+        this.handleClick(boolean);
+      })
     }
   }
 </script>

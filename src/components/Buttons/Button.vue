@@ -30,5 +30,7 @@
     background-color:transparent;
 
     -webkit-appearance: none;
+
+    cursor:pointer;
   }
 </style>

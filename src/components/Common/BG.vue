@@ -1,13 +1,12 @@
 <template>
   <div id="app-background-wrapper" ref="bgWrapper">
-    <div data-depth="0.1" class="app-background" :class="bgClassName"></div>
+    <div data-depth="0.05" class="app-background" :class="bgClassName"></div>
   </div>
 </template>
 
 <script>
   import Parallax from 'parallax-js';
-
-
+  
   export default {
     name: "Background",
     props: {
@@ -47,6 +46,10 @@
   background-position:center;
   background-repeat:no-repeat;
   background-size: auto 100%;
+
+  @include m('istart'){
+    background-image:url('../../assets/images/bg/start.jpg');
+  }
 
   @include m('i1'){
     background-image:url('../../assets/images/bg/1.jpg');

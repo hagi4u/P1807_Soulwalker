@@ -1,25 +1,32 @@
 <template>
   <div class="app">
-    <Header class="app__header" @onMute="handleMute"/>
+    <Header class="app__header"/>
+    <StartScreen class="app__start-screen"/>
+    
     <SystemScreen
       @click="handleSystemScreenClick"
       v-if="scene.prompt[promptIdx].user === 'system'">
       System Screen
     </SystemScreen>
+
     <Screen class="app__screen" 
+      v-if="false"
       :scene="scene" 
       :promptIdx="promptIdx"
       :isLastPrompt="isLastPrompt"
       
       v-else
     />
-    <BG type="4"/>
+    <BG type="start"/>
     <Footer/>
   </div>
 </template>
 
 <script>
 import Header from '@/layout/Header.vue';
+
+import StartScreen from '@/layout/start.vue';
+
 import SystemScreen from '@/layout/SystemScreen';
 import Screen from '@/layout/Screen.vue';
 import Footer from '@/layout/Footer.vue';
@@ -28,9 +35,6 @@ import BG from '@/components/Common/BG.vue';
 
 import EventBus from '@/utils/eventBus';
 import Engine from '@/utils/engine';
-import Sound from '@/utils/sounds';
-
-// Sound.setMute(true);
 
 export default {
   name: 'App',
@@ -45,15 +49,13 @@ export default {
   },
   components: {
     Header,
+    StartScreen,
     Screen,
     SystemScreen,
     BG,
     Footer
   },
   methods: {
-    handleMute(boolean = true){
-      Sound.setMute(boolean);
-    },
     handleChangeEndingScene( cid = 100 ){
       this.resultId = this.scene.goal_cid;
       this.scene = JSON.parse(JSON.stringify(Engine.goToNode(cid).getNode()).replace('[END_GOAL]', this.endingCopy));
@@ -96,9 +98,6 @@ export default {
     }
   },
   mounted(){
-    Sound.bg.loop = true;
-    Sound.play('bg');
-
     EventBus.$on('nextPrompt', () => {
       if(this.isLastPrompt && this.scene.goal_cid){
         return this.handleChangeEndingScene();
@@ -133,10 +132,7 @@ export default {
       this.scene = Engine.goToParentNode().getNode();
     })
 
-  },
-  destroyed(){
-    Sound.stop('bg');
-  },
+  }
 }
 </script>
 
@@ -154,9 +150,10 @@ export default {
   .app{
     &__header{
       position:relative;
-      z-index:10;
+      z-index:100;
     }
-    &__screen{
+    &__screen,
+    &__start-screen{
       position:absolute;
       top:0;
       bottom:0;
@@ -164,8 +161,7 @@ export default {
       left:0;
       z-index:10;
 
-      // min-width:720px;
-      max-width:720px;
+      overflow:hidden;
 
       margin-right:auto;
       margin-left:auto;
