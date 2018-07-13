@@ -1,5 +1,6 @@
 <template>
-  <div class="prompt">
+  <div class="prompt" @click="handleClickPrompt()">
+    <img :src="promptImage" alt="">
     <h3 class="prompt__user">{{user}}</h3>
     <div class="prompt__content">
       <vue-typed-js 
@@ -11,12 +12,16 @@
         @onComplete="handleCompleteTyping()"
         ref="typedComponent"
       >
-        <p class="prompt__typing typing" @click="handleClickPrompt()"></p>
+        <p class="prompt__typing typing"></p>
       </vue-typed-js>
       <p class="prompt__typing typing" v-else-if="isClicked" v-html="prompt">
       </p>
-      <Button class="prompt__buttons prompt__buttons--prev" @click="handlePrevButtonClick()" v-if="isShownPrevButton">PREV</button>
-      <Button class="prompt__buttons prompt__buttons--next" @click="handleNextButtonClick()" v-if="isShownNextButton">NEXT</Button>
+      <Button class="prompt__buttons prompt__buttons--prev" @click.stop="handlePrevButtonClick()" v-if="isShownPrevButton">
+        <img :src="PrevButtonImage" alt="">
+      </button>
+      <Button class="prompt__buttons prompt__buttons--next" @click.stop="handleNextButtonClick()" v-if="isShownNextButton">
+        <img :src="NextButtonImage" alt="">
+      </Button>
     </div>
   </div>
 </template>
@@ -24,9 +29,16 @@
 <script>
   import Vue from 'vue/dist/vue.js';
   import { VueTypedJs } from 'vue-typed-js'
-  
+
+  import ModelPromptImage from '@/assets/images/common/prompt_model.png';
+  import MePromptImage from '@/assets/images/common/prompt_me.png';
+
+  import ModelPrevButton from '@/assets/images/common/btn_model_prev.png';
+  import ModelNextButton from '@/assets/images/common/btn_model_next.png';
+  import MePrevButton from '@/assets/images/common/btn_me_prev.png';
+  import MeNextButton from '@/assets/images/common/btn_me_next.png';
+
   import Button from '@/components/Buttons/Button';  
-  
   import Sound from '@/utils/sounds';
 
   Vue.use(VueTypedJs);
@@ -69,6 +81,29 @@
         isToggleTypedComponent: false
       }
     },
+    computed:{
+      isShownPrevButton(){
+        return !this.isMe && !this.isButtonsHide;
+      },
+      isShownNextButton(){
+        if(this.isLastScene && !this.isButtonsHide){
+          return true;
+        }
+        if(this.isLastPrompt){
+          return false;
+        }
+        return !this.isButtonsHide;
+      },
+      promptImage(){
+        return this.isMe ? MePromptImage : ModelPromptImage
+      },
+      PrevButtonImage(){
+        return this.isMe ? MePrevButton : ModelPrevButton
+      },
+      NextButtonImage(){
+        return this.isMe ? MeNextButton : ModelNextButton
+      }
+    },
     updated(){
       if(this.isToggleTypedComponent){
         this.isToggleTypedComponent = false;
@@ -101,20 +136,6 @@
         this.$emit('onPrevButtonClick', e);
       }
     },
-    computed:{
-      isShownPrevButton(){
-        return !this.isMe && !this.isButtonsHide;
-      },
-      isShownNextButton(){
-        if(this.isLastScene && !this.isButtonsHide){
-          return true;
-        }
-        if(this.isLastPrompt){
-          return false;
-        }
-        return !this.isButtonsHide;
-      }
-    }
   }
 </script>
 
@@ -122,32 +143,38 @@
   @import '../../utils/sass/layouts/bem.scss';
   .prompt{
     position:absolute;
-    bottom:40px;
+    width:661px;
+    top:50%;
     left:50%;
     transform:translateX(-50%);
+    @include e('user'){
+      position: absolute;
+      top: 15px;
+      left: 44px;
+      width: 76px;
+      font-size:20px;
+      text-align: center;
+      color: #FFF;
+    }
     @include e('content'){
-      position:relative;
-      width:400px;
-      height:200px;
-
-      background-color:#F0F0F0;
+      position: absolute;
+      width: 562px;
+      height: 142px;
+      top: 60px;
+      left: 56px;
     }
     @include e('typing'){
-      position:absolute;
-      top:10px;
-      right:10px;
-      bottom:10px;
-      left:10px;
+      line-height: 1.5;
+      font-size: 26px;
     }
     @include e('buttons'){
       position:absolute;
-      top:50%;
-      transform:translateY(-50%);
+      bottom:0;
       @include m('prev'){
-        left:-20px;
+        left:0;
       }
       @include m('next'){
-        right:-20px;
+        right:0;
       }
     }
     p {

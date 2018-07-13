@@ -92,7 +92,7 @@
       },
       handleStartClick(){
         EventBus.$emit('toggleSound', false);
-        console.log('start screen 숨기기')
+        this.$emit('onStartButtonClick');
       }
     },
     mounted(){
@@ -103,6 +103,7 @@
 
 <style lang="scss">
   @import '@/utils/sass/layouts/bem.scss';
+  @import '@/utils/sass/layouts/mediaquery.scss';
   .start-screen{
     @include e('model'){
       position:absolute;
@@ -116,6 +117,13 @@
       margin-left:auto;
 
       z-index:15;
+      
+      @include breakpoint(max-width, 1024px){
+        top:auto;
+        bottom:-20px;
+        width:110%;
+        margin-left:-5%;
+      }
     }
     @include e('title'){
       position:absolute;

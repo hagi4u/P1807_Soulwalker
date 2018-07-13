@@ -1,7 +1,11 @@
 <template>
   <div class="app">
     <Header class="app__header"/>
-    <StartScreen class="app__start-screen"/>
+    <StartScreen 
+      v-if="!isStarted"
+      class="app__start-screen"
+      @onStartButtonClick="handleStartButtonClick"
+    />
     
     <SystemScreen
       @click="handleSystemScreenClick"
@@ -10,12 +14,10 @@
     </SystemScreen>
 
     <Screen class="app__screen" 
-      v-if="false"
+      v-if="isStarted"
       :scene="scene" 
       :promptIdx="promptIdx"
       :isLastPrompt="isLastPrompt"
-      
-      v-else
     />
     <BG type="start"/>
     <Footer/>
@@ -41,6 +43,7 @@ export default {
   data() {
     return {
       scene: Engine.getNode(),
+      isStarted: true,
       resultId: false,
       isLastPrompt: false,
       promptIdx: 0,
@@ -62,6 +65,9 @@ export default {
     },
     handleSystemScreenClick(){
       EventBus.$emit('nextPrompt');
+    },
+    handleStartButtonClick(){
+      this.isStarted = true;
     }
   },
   computed: {
