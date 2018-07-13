@@ -1,23 +1,27 @@
 <template>
   <div class="app">
     <Header class="app__header"/>
-    <StartScreen 
-      v-if="!isStarted"
-      class="app__start-screen"
+    
+    <StartScreen class="app__start-screen" 
+      v-if="gameState === 'start'" 
       @onStartButtonClick="handleStartButtonClick"
     />
     
-    <SystemScreen
+    <SystemScreen 
+      v-if="isSystem"
       @click="handleSystemScreenClick"
-      v-if="scene.prompt[promptIdx].user === 'system'">
-      System Screen
+    >
+      <Saving v-if="gameState === 'saving'" @onCompleteSave="handleCompleteSave"/>
+      <Ending v-else-if="gameState === 'end'" @onCompleteSave="handleCompleteSave"/>
+      <p v-else v-html="this.scene.prompt[this.promptIdx].prompt" class="system-screen__content"></p>
     </SystemScreen>
 
     <Screen class="app__screen" 
-      v-if="isStarted"
       :scene="scene" 
       :promptIdx="promptIdx"
       :isLastPrompt="isLastPrompt"
+
+      v-if="gameState === 'playing' && !isSystem"
     />
     <BG type="start"/>
     <Footer/>
@@ -34,6 +38,8 @@ import Screen from '@/layout/Screen.vue';
 import Footer from '@/layout/Footer.vue';
 
 import BG from '@/components/Common/BG.vue';
+import Saving from '@/components/Common/Saving.vue';
+import Ending from '@/components/Common/Ending.vue';
 
 import EventBus from '@/utils/eventBus';
 import Engine from '@/utils/engine';
@@ -43,7 +49,7 @@ export default {
   data() {
     return {
       scene: Engine.getNode(),
-      isStarted: true,
+      gameState: 'start',
       resultId: false,
       isLastPrompt: false,
       promptIdx: 0,
@@ -56,6 +62,8 @@ export default {
     Screen,
     SystemScreen,
     BG,
+    Saving,
+    Ending,
     Footer
   },
   methods: {
@@ -67,7 +75,10 @@ export default {
       EventBus.$emit('nextPrompt');
     },
     handleStartButtonClick(){
-      this.isStarted = true;
+      this.gameState = 'playing'
+    },
+    handleCompleteSave(){
+      this.gameState = 'end'
     }
   },
   computed: {
@@ -86,11 +97,20 @@ export default {
       if(this.resultId == 103 || this.resultId == 113){
         return '짜잔!! 럭셔리한 우리 오빠의 마이룸을 위해'
       }
+    },
+    isSystem(){
+      return this.scene.prompt[this.promptIdx].user === 'system'
     }
   },
   watch: {
     promptIdx(){
       this.isLastPrompt = Engine.isLastPrompt();
+
+
+      if(this.scene.prompt[this.promptIdx].prompt === '$saving'){
+        this.gameState = 'saving';
+        console.log('saving 단계')
+      }
 
       if(this.scene.prompt[this.promptIdx].user === 'system'){
         this.delayBuffer = setTimeout(() => {
