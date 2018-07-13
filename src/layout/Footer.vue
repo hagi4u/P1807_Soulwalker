@@ -33,7 +33,9 @@
       right:0;
       left:0;
 
+      width:100%;
       max-width:1302px;
+      
       margin-right:auto;
       margin-left:auto;
     }
@@ -47,6 +49,7 @@
   }
   .banner-gift{
     position:absolute;
+    width:312px;
     bottom:0;
     right:0;
 
