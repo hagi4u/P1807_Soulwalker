@@ -49,6 +49,8 @@
 
     text-align:center;
 
+      font-weight:800;
+
     &__text{
       font-size:20px;
       margin-bottom:-100px

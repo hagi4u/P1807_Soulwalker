@@ -47,6 +47,7 @@
       margin-bottom:30px;
       font-size:20px;
       line-height:2;
+      font-weight:800;
       color:#FFF;
       > strong{
         color:#fff799;

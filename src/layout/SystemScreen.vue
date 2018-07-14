@@ -37,6 +37,7 @@
 
       text-align:center;
       font-size:20px;
+      font-weight:800;
       transform:translate(-50%, -50%);
     }
   }
