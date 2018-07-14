@@ -15,7 +15,8 @@
     "normalize.css": "^8.0.0",
     "parallax-js": "^3.1.0",
     "vue": "^2.5.2",
-    "vue-typed-js": "^0.1.2"
+    "vue-typed-js": "^0.1.2",
+    "vue-youtube-embed": "^2.2.1"
   },
   "devDependencies": {
     "autoprefixer": "^8.6.5",

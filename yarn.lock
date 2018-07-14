@@ -6079,6 +6079,10 @@ vue-typed-js@^0.1.2:
   dependencies:
     typed.js "git+https://github.com/mattboldt/typed.js.git"
 
+vue-youtube-embed@^2.2.1:
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/vue-youtube-embed/-/vue-youtube-embed-2.2.1.tgz#a3be445d2c8e647be2608c90993d5e8791107207"
+
 vue@^2.5.2:
   version "2.5.16"
   resolved "https://registry.yarnpkg.com/vue/-/vue-2.5.16.tgz#07edb75e8412aaeed871ebafa99f4672584a0085"
