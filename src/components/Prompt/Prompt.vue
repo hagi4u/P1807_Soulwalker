@@ -147,6 +147,7 @@
     width:661px;
     top:55%;
     left:50%;
+    z-index:100;
     -ms-transform:translateX(-50%);
     transform:translateX(-50%);
     @include breakpoint(max-width, 1440px){
@@ -174,8 +175,8 @@
       letter-spacing: -1px;
     }
     @include e('typing'){
-      line-height: 1.5;
-      font-size: 26px;
+      line-height: 1.45;
+      font-size: 25px;
     }
     @include e('buttons'){
       position:absolute;
