@@ -51,17 +51,14 @@
     background-image:url('../../assets/images/bg/start.jpg');
   }
 
+  @include m('i0'){
+    background-image:url('../../assets/images/bg/0.jpg');
+  }
   @include m('i1'){
     background-image:url('../../assets/images/bg/1.jpg');
   }
   @include m('i2'){
     background-image:url('../../assets/images/bg/2.jpg');
-  }
-  @include m('i3'){
-    background-image:url('../../assets/images/bg/3.jpg');
-  }
-  @include m('i4'){
-    background-image:url('../../assets/images/bg/4.jpg');
   }
 }
 </style>
