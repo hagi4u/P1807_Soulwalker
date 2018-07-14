@@ -56,13 +56,12 @@
       beforeEnter(el){    
         TweenLite.set(el, {y: -15, opacity:0});
       },
-      enter(el, done){
+      enter(el){
         TweenLite.to(el, 0.7, {
           y: 0, 
           opacity:1, 
           ease: Power4.easeInOut, 
-          delay: 0.2 * this.listItemIndex,
-          onComplete: done
+          delay: 0.2 * this.listItemIndex
         });
         this.listItemIndex = this.listItemIndex + 1
       },
