@@ -23,7 +23,7 @@
 
       v-if="gameState === 'playing' && !isSystem"
     />
-    <BG type="start"/>
+    <BG :type="bgType"/>
     <Footer/>
   </div>
 </template>
@@ -69,7 +69,7 @@ export default {
   methods: {
     handleChangeEndingScene( cid = 100 ){
       this.resultId = this.scene.goal_cid;
-      this.scene = JSON.parse(JSON.stringify(Engine.goToNode(cid).getNode()).replace('[END_GOAL]', this.endingCopy));
+      this.scene = JSON.parse(JSON.stringify(Engine.goToNode(cid).getNode()).replace('$END_GOAL', this.endingCopy));
     },
     handleSystemScreenClick(){
       EventBus.$emit('nextPrompt');
@@ -100,13 +100,16 @@ export default {
     },
     isSystem(){
       return this.scene.prompt[this.promptIdx].user === 'system'
+    },
+    bgType(){
+      return this.gameState === 'start' ? 'start' : this.scene.prompt[this.promptIdx].bg
     }
   },
   watch: {
     promptIdx(){
       this.isLastPrompt = Engine.isLastPrompt();
 
-      if(this.scene.prompt[this.promptIdx].prompt === '$saving'){
+      if(this.scene.prompt[this.promptIdx].prompt === '$SAVING'){
         this.gameState = 'saving';
       }
 

@@ -57,7 +57,7 @@
         return this.scene.prompt[this.promptIdx].user === '나'
       },
       isShownCharacterSelector(){
-        return this.scene.prompt[this.promptIdx].optional1 === 'characterSelector'
+        return this.scene.prompt[this.promptIdx].prompt === '$CHARACTER'
       },
       currentPrompt(){
         return {
