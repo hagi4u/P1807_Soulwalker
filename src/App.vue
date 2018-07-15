@@ -2,27 +2,27 @@
   <div class="app">
     <Header class="app__header"/>
     
-    <StartScreen class="app__start-screen" 
+    <StartContents class="app__start-screen" 
       v-if="gameState === 'start'" 
       @onStartButtonClick="handleStartButtonClick"
     />
     
-    <SystemScreen 
-      v-if="isSystem"
-      @click="handleSystemScreenClick"
+    <SystemContents 
+      v-if="isSystem" 
+      @click="handleSystemContentsClick"
     >
       <Saving v-if="gameState === 'saving'" @onCompleteSave="handleCompleteSave"/>
       <Ending v-else-if="gameState === 'end'" @onCompleteSave="handleCompleteSave"/>
       <p v-else v-html="this.scene.prompt[this.promptIdx].prompt" class="system-screen__content"></p>
-    </SystemScreen>
+    </SystemContents>
 
-    <Screen class="app__screen" 
+    <MainContents class="app__screen" 
+      v-if="gameState === 'playing' && !isSystem"
+      
       :scene="scene" 
       :endingScene="endingScene"
       :promptIdx="promptIdx"
       :isLastPrompt="isLastPrompt"
-
-      v-if="gameState === 'playing' && !isSystem"
     />
     <BG :type="bgType"/>
     <Footer/>
@@ -30,13 +30,13 @@
 </template>
 
 <script>
-import Header from '@/layout/Header.vue';
-
-import StartScreen from '@/layout/start.vue';
-
-import SystemScreen from '@/layout/SystemScreen';
-import Screen from '@/layout/Screen.vue';
+// Common
+import Header from '@/layout/Header';
 import Footer from '@/layout/Footer.vue';
+
+import StartContents from '@/layout/StartContents';
+import SystemContents from '@/layout/SystemContents';
+import MainContents from '@/layout/Contents';
 
 import BG from '@/components/Common/BG.vue';
 import Saving from '@/components/Common/Saving.vue';
@@ -59,9 +59,9 @@ export default {
   },
   components: {
     Header,
-    StartScreen,
-    Screen,
-    SystemScreen,
+    StartContents,
+    MainContents,
+    SystemContents,
     BG,
     Saving,
     Ending,
@@ -83,15 +83,12 @@ export default {
           ...item
         }
       });
-
-      console.log(this.scene.prompt)
       
-
       if(this.resultId){
         console.log('goal_cid 에 대해 ajax call 하는 함수 만들기')
       }
     },
-    handleSystemScreenClick(){
+    handleSystemContentsClick(){
       EventBus.$emit('nextPrompt');
     },
     handleStartButtonClick(){
@@ -115,7 +112,7 @@ export default {
         obj.title = "화려한 스킬 연계와 화끈한 액션의 재미를<br/>가장 중요하기 생각하는 당신!!";
         obj.name = '파이트';
         obj.type = 0;
-        obj.model = this.resultId === 101 ? 26 : 37;
+        obj.model = this.resultId == 101 ? 26 : 37;
       }
       if(this.resultId == 102 || this.resultId == 112){
         // 27 = 기존 , 38 = 신규
@@ -123,7 +120,7 @@ export default {
         obj.title = "언제 어디서나 자신의 개성을 최우선으로 생각하는<br/>스타일에 죽고 스타일에 사는 당신!";
         obj.name = '패션피플';
         obj.type = 1;
-        obj.model = this.resultId === 102 ? 27 : 38;
+        obj.model = this.resultId == 102 ? 27 : 38;
       }
       if(this.resultId == 103 || this.resultId == 113){
         // 110 = 기존, 39 = 신규
@@ -131,7 +128,7 @@ export default {
         obj.title = "언제나 깔끔하고 럭셔리한 나만의 공간을<br/>최우선으로 생각하는 당신!";
         obj.name = '럭셔리';
         obj.type = 2;
-        obj.model = this.resultId === 103 ? 110 : 39;
+        obj.model = this.resultId == 103 ? 110 : 39;
       }
 
       return obj

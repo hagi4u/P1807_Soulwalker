@@ -2,7 +2,7 @@
   <div class="start-screen">
     <transition name="model-anim" appear>
       <div class="start-screen__model" ref="model">
-        <img src="@/assets/images/start/model.png" alt="" data-depth="0.2">
+        <img src="@/assets/images/model/10.png" alt="" data-depth="0.2">
       </div>
     </transition>
     <transition

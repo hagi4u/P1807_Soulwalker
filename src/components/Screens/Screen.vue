@@ -50,9 +50,7 @@
         this.modelAnim = this.getModelAnimDirection();
         this.className = this.isNested || !!this.$slots.default ? 'screen--nested' : false ;
         
-        if(this.isUpdateScreen){
-          this.isUpdateScreen = false;
-        }
+        this.isUpdateScreen = false;
       }
     },
     methods:{
@@ -149,7 +147,7 @@
 
   .model-left,
   .extra{
-    &-enter{
+    &-enter, &-leave-to{
       opacity:0;
       transform:translateX(-50px);
     }
@@ -162,7 +160,7 @@
     }
   }
   .model-right{
-    &-enter{
+    &-enter, &-leave-to{
       opacity:0;
       transform:translateX(50px);
     }
