@@ -149,27 +149,27 @@
   .extra{
     &-enter, &-leave-to{
       opacity:0;
-      transform:translateX(-50px);
+      transform:translateX(-50px) !important;
     }
     &-enter-active{
       transition:all 0.6s ease-in-out;
     }
     &-enter-to{
       opacity:1;
-      transform:translate(0);
+      transform:translate(0) !important;
     }
   }
   .model-right{
     &-enter, &-leave-to{
       opacity:0;
-      transform:translateX(50px);
+      transform:translateX(50px) !important;
     }
     &-enter-active{
       transition:all 0.6s ease-in-out;
     }
     &-enter-to{
       opacity:1;
-      transform:translate(0);
+      transform:translate(0) !important;
     }
   }
 </style>
