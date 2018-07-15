@@ -1,7 +1,7 @@
 <template>
   <div class="app">
     <Header class="app__header"/>
-    
+
     <StartContents class="app__start-screen" 
       v-if="gameState === 'start'" 
       @onStartButtonClick="handleStartButtonClick"
@@ -11,7 +11,8 @@
       v-if="isSystem" 
       @click="handleSystemContentsClick"
     >
-      <Saving v-if="gameState === 'saving'" @onCompleteSave="handleCompleteSave"/>
+      <Loading v-if="gameState === 'loading'" @onLoadingComplete="handleLoadingComplete"/>
+      <Saving v-else-if="gameState === 'saving'" @onCompleteSave="handleCompleteSave"/>
       <Ending v-else-if="gameState === 'end'" @onCompleteSave="handleCompleteSave"/>
       <p v-else v-html="this.scene.prompt[this.promptIdx].prompt" class="system-screen__content"></p>
     </SystemContents>
@@ -41,6 +42,7 @@ import MainContents from '@/layout/Contents';
 import BG from '@/components/Common/BG.vue';
 import Saving from '@/components/Common/Saving.vue';
 import Ending from '@/components/Common/Ending.vue';
+import Loading from '@/components/Loading/Loading.vue';
 
 import EventBus from '@/utils/eventBus';
 import Engine from '@/utils/engine';
@@ -59,6 +61,7 @@ export default {
   },
   components: {
     Header,
+    Loading,
     StartContents,
     MainContents,
     SystemContents,
@@ -92,7 +95,10 @@ export default {
       EventBus.$emit('nextPrompt');
     },
     handleStartButtonClick(){
-      this.gameState = 'playing'
+      this.gameState = 'loading'
+    },
+    handleLoadingComplete(){
+      this.gameState = 'playing';
     },
     handleCompleteSave(){
       this.gameState = 'end'
@@ -134,7 +140,7 @@ export default {
       return obj
     },
     isSystem(){
-      return this.scene.prompt[this.promptIdx].user === 'system'
+      return this.scene.prompt[this.promptIdx].user === 'system' || this.gameState === 'loading'
     },
     bgType(){
       return this.gameState === 'start' ? 'start' : this.scene.prompt[this.promptIdx].bg

@@ -49,30 +49,8 @@ module.exports = {
             limit: 10000,
             name: utils.assetsPath('images/[name].[hash:7].[ext]')
           }
-        }, {
-          loader: 'image-webpack-loader',
-          options: {
-            mozjpeg: {
-              progressive: true,
-              quality: 65
-            },
-            // optipng.enabled: false will disable optipng
-            optipng: {
-              enabled: false,
-            },
-            pngquant: {
-              quality: '65-90',
-              speed: 4
-            },
-            gifsicle: {
-              interlaced: false,
-            },
-            // the webp option will enable WEBP
-            webp: {
-              quality: 75
-            }
-          }
-        }]
+        }
+      ]
       },
       {
         test: /\.(mp4|webm|ogg|mp3|wav|flac|aac)(\?.*)?$/,
