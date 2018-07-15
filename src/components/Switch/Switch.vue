@@ -33,7 +33,7 @@
 
         if(!boolean){
           Sound.play('bg');
-          Sound.play.loop = true;
+          Sound.bg.loop = true;
         } 
       }
     },

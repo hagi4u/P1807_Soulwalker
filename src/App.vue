@@ -89,12 +89,15 @@ export default {
 
       // 조금 더 똑똑하게 할 수 있음 (우선 여기다가 텍스트 넣는걸로..)
       if(this.resultId == 101 || this.resultId == 111){
+        // 26 = 기존 , 37 = 신규
         return '짜잔!! 화끈한 액션을 좋아하는 우리 오빠를 위한'
       }
       if(this.resultId == 102 || this.resultId == 112){
+        // 27 = 기존 , 38 = 신규
         return '짜잔!! 스타일에 죽고 스타일에 사는 우리 오빠를 위한'
       }
       if(this.resultId == 103 || this.resultId == 113){
+        // 110 = 기존, 39 = 신규
         return '짜잔!! 럭셔리한 우리 오빠의 마이룸을 위해'
       }
     },

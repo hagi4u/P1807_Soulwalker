@@ -1,10 +1,11 @@
 <template>
   <main class="screen">
-    <!--
-      n-Layer ScreenComponent
-      v-if="!isLastPrompt"
-    -->
-
+    <!-- n-Layer ScreenComponent -->
+    <Screen
+      v-if="!isShownCharacterSelector && currentPrompt.model > 0"
+      :model="currentPrompt.model"
+      :extra="currentPrompt.nested"
+    />
     <!-- Character Selector Component -->
     <CharacterSelector v-if="isShownCharacterSelector"/>
 
@@ -37,6 +38,7 @@
   import CharacterSelector from '@/components/Character/Entry';
 
   import Question from '@/components/Question/List';
+  import Screen from '@/components/Screens/Screen';
 
   import EventBus from '@/utils/eventBus';
   export default {
@@ -44,6 +46,7 @@
     components: {
       Prompt,
       Question,
+      Screen,
       CharacterSelector
     },
     data(){
@@ -62,7 +65,8 @@
       currentPrompt(){
         return {
           ...this.scene.prompt[this.promptIdx],
-          promptIdx: this.promptIdx
+          promptIdx: this.promptIdx,
+          model: parseInt(this.scene.prompt[this.promptIdx].model)
         }
       }
     },

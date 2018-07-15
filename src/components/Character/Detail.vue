@@ -17,15 +17,14 @@
       </Button>
     </div>
     
-    <!-- 성소 이미지 넣기 -->
-
-    <transition 
-      @before-enter="beforeEnterCharacter" 
-      @enter="enterCharacter"
-      appear
-    >
+    <transition name="model-anim" appear>
+      <div class="character-detail__bg-model" ref="model">
+        <img data-depth="0.35" :src="require(`@/assets/images/model/${data.m_key}.png`)" alt="">    
+      </div>
+    </transition>
+    <transition name="character-anim" appear>
       <div class="character-detail__bg-character" ref="character">
-        <img data-depth="0.25" :src="require(`@/assets/images/character/img_char${data.key}.png`)" alt="">    
+        <img data-depth="0.15" :src="require(`@/assets/images/character/img_char${data.key}.png`)" alt="">    
       </div>
     </transition>
 
@@ -63,7 +62,8 @@
     },
     data(){
       return {
-        characterParallaxInstance: null
+        characterParallaxInstance: null,
+        modelParallaxInstance: null
       }
     },
     methods: {
@@ -79,18 +79,16 @@
       enterRight(el, done){
         TweenLite.to(el, 0.5, {x: '0%', delay: 0.2})
       },
-      beforeEnterCharacter(el){
-        TweenLite.set(el, {x: -30, opacity:0});
-      },
-      enterCharacter(el, done){
-        TweenLite.to(el, 0.7, {x: 0, delay: 0.2, opacity:1});
-      },
       handleOtherClick(){
         this.$emit('onOtherClick')
       }
     },
     mounted(){
       this.characterParallaxInstance = new Parallax(this.$refs.character)
+      this.modelParallaxInstance = new Parallax(this.$refs.model, {
+        invertX: false,
+        invertY: true,
+      })
     }
   }
 </script>
@@ -152,6 +150,20 @@
       }
     }
 
+    @include e('bg-model'){
+      position:absolute;
+      top:0;
+      bottom:0;
+      right:48%;
+      z-index:11;
+      > img{
+        display:block;
+        max-width:none;
+        margin-top:-10%;
+        height:120%;
+      }
+    }
+
     @include e('youtube'){
       width:442px;
       height:283px;
@@ -167,6 +179,32 @@
     @include e('btn'){
       display:block;
       float:right;
+    }
+  }
+  .model-anim{
+    &-enter{
+      opacity:0;
+      transform:translateX(30px)
+    }
+    &-enter-to{
+      opacity:1;
+      transform:translateX(0)
+    }
+    &-enter-active{
+      transition:all 0.7s ease-in-out
+    }
+  }
+  .character-anim{
+    &-enter{
+      opacity:0;
+      transform:translateX(-30px)
+    }
+    &-enter-to{
+      opacity:1;
+      transform:translateX(0)
+    }
+    &-enter-active{
+      transition:all 0.7s ease-in-out
     }
   }
 </style>
