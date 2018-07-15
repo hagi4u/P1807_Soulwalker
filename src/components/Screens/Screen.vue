@@ -1,19 +1,19 @@
 <template>
   <div class="screen" :class="className">
-    <transition :name="modelAnim" v-if="isUpdateScreen" appear mode="out-in">
+    <transition :name="modelAnim" v-if="isUpdateScreen" appear mode="in-out">
       <div class="screen__model" ref="model">
         <img data-depth="0.15" :src="require(`@/assets/images/model/${model}.png`)" alt="">
       </div>
     </transition>
     
-    <transition v-if="isNested" name="extra" appear>
-      <template>
-        <ul class="screen__screenshot">
+    <transition name="extra" appear>
+      <slot>
+        <ul class="screen__slot" v-if="isNested">
           <li class="screen__screenshot-item" v-for="(screenshot, index) in extraArray" :key="index">
             <img :src="require(`@/assets/images/screenshots/${screenshot}.png`)" alt="">
           </li>
         </ul>
-      </template>
+      </slot>
     </transition>
   </div>
 </template>
@@ -28,6 +28,7 @@
       return {
         isUpdateScreen: true,
         modelParallaxInstance: null,
+        className: false,
         modelAnim: this.getModelAnimDirection(),
         parallaxOptions: {
           limitY: false,
@@ -40,24 +41,22 @@
       isNested(){
         return this.extra.length > 0
       },
-      className(){
-        return this.isNested ? 'screen--nested' : false 
-      },
       extraArray(){
         return this.extra ? this.extra.split(',') : false
       }
     },
     watch:{
       model(){
+        this.modelAnim = this.getModelAnimDirection();
+        this.className = this.isNested || !!this.$slots.default ? 'screen--nested' : false ;
+        
         if(this.isUpdateScreen){
           this.isUpdateScreen = false;
         }
-        this.modelAnim = this.getModelAnimDirection();
       }
     },
     methods:{
       getModelAnimDirection(){
-        // return parseInt(Math.random() * 2) === 0 ? 'model-left' : 'model-right'
         if(this.isNested){
           return 'model-right'
         }
@@ -83,15 +82,19 @@
 
 <style lang="scss">
   @import '@/utils/sass/layouts/bem.scss';
+  @import '@/utils/sass/layouts/mediaquery.scss';
 
   .screen{
+    position:absolute;
+    top:0;
+    right:0;
+    bottom:0;
+    left:0;
+
     @include e('model'){
       > img{
-        // position:absolute;
         top:0;
         bottom:0;
-        // left:50%;
-        // transform:translateX(-50%);
 
         max-width:none;
         height:120%;
@@ -107,8 +110,12 @@
           > img{
             height:100%;
           }
+
+          @include breakpoint(max-width, 1023px){
+            right:50%;
+          }
         }
-        @include e('screenshot'){
+        @include e('slot'){
           position:absolute;
           left:50%;
           top:80px;
@@ -120,6 +127,12 @@
           margin-left: -244px;
 
           list-style:none;
+
+          @include breakpoint(max-width, 1024px){
+            top:140px;
+            max-width:500px;
+            margin-left: -124px;
+          }
         }
         @include e('screenshot-item'){
           float:left;

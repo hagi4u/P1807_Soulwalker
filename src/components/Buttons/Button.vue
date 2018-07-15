@@ -20,7 +20,7 @@
   }
 </script>
 
-<style scoped>
+<style>
   button{
     margin:0;
     padding:0;

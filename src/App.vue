@@ -18,6 +18,7 @@
 
     <Screen class="app__screen" 
       :scene="scene" 
+      :endingScene="endingScene"
       :promptIdx="promptIdx"
       :isLastPrompt="isLastPrompt"
 
@@ -69,7 +70,26 @@ export default {
   methods: {
     handleChangeEndingScene( cid = 100 ){
       this.resultId = this.scene.goal_cid;
-      this.scene = JSON.parse(JSON.stringify(Engine.goToNode(cid).getNode()).replace('$END_GOAL', this.endingCopy));
+      this.scene = JSON.parse(JSON.stringify(Engine.goToNode(cid).getNode()).replace('$END_GOAL', this.endingScene.text));
+      this.scene.prompt = this.scene.prompt.map(item => {
+        
+        if(item.nested === '$COUPON'){
+          item.nested = '';
+          item.isCoupon = true;
+          item.model = this.endingScene.model;
+        }
+        
+        return {
+          ...item
+        }
+      });
+
+      console.log(this.scene.prompt)
+      
+
+      if(this.resultId){
+        console.log('goal_cid 에 대해 ajax call 하는 함수 만들기')
+      }
     },
     handleSystemScreenClick(){
       EventBus.$emit('nextPrompt');
@@ -82,24 +102,39 @@ export default {
     }
   },
   computed: {
-    endingCopy(){
+    endingScene(){
       if(!this.resultId){
         return null
       }
+      const obj = {};
 
       // 조금 더 똑똑하게 할 수 있음 (우선 여기다가 텍스트 넣는걸로..)
       if(this.resultId == 101 || this.resultId == 111){
         // 26 = 기존 , 37 = 신규
-        return '짜잔!! 화끈한 액션을 좋아하는 우리 오빠를 위한'
+        obj.text = '짜잔!! 화끈한 액션을 좋아하는 우리 오빠를 위한';
+        obj.title = "화려한 스킬 연계와 화끈한 액션의 재미를<br/>가장 중요하기 생각하는 당신!!";
+        obj.name = '파이트';
+        obj.type = 0;
+        obj.model = this.resultId === 101 ? 26 : 37;
       }
       if(this.resultId == 102 || this.resultId == 112){
         // 27 = 기존 , 38 = 신규
-        return '짜잔!! 스타일에 죽고 스타일에 사는 우리 오빠를 위한'
+        obj.text = '짜잔!! 스타일에 죽고 스타일에 사는 우리 오빠를 위한';
+        obj.title = "언제 어디서나 자신의 개성을 최우선으로 생각하는<br/>스타일에 죽고 스타일에 사는 당신!";
+        obj.name = '패션피플';
+        obj.type = 1;
+        obj.model = this.resultId === 102 ? 27 : 38;
       }
       if(this.resultId == 103 || this.resultId == 113){
         // 110 = 기존, 39 = 신규
-        return '짜잔!! 럭셔리한 우리 오빠의 마이룸을 위해'
+        obj.text = '짜잔!! 럭셔리한 우리 오빠의 마이룸을 위해';
+        obj.title = "언제나 깔끔하고 럭셔리한 나만의 공간을<br/>최우선으로 생각하는 당신!";
+        obj.name = '럭셔리';
+        obj.type = 2;
+        obj.model = this.resultId === 103 ? 110 : 39;
       }
+
+      return obj
     },
     isSystem(){
       return this.scene.prompt[this.promptIdx].user === 'system'

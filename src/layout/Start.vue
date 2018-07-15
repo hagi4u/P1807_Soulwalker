@@ -129,6 +129,16 @@
         width:110%;
         margin-left:-5%;
       }
+
+      // ipad only
+      @media only screen 
+        and (min-device-width : 768px) 
+        and (max-device-width : 1024px) 
+        and (orientation : landscape) {
+        
+          top:0;
+          bottom:auto;
+        }
     }
     @include e('title'){
       position:absolute;

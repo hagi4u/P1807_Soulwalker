@@ -95,6 +95,7 @@
 
 <style lang="scss">
   @import '@/utils/sass/layouts/bem.scss';
+  @import '@/utils/sass/layouts/mediaquery.scss';
   .character-detail{
     position:fixed;
     top:0;
@@ -113,6 +114,9 @@
 
       transform:translateX(-50%);
       z-index:20;
+      @include breakpoint(max-height, 800px){
+        top:3%;
+      }
     }
 
     @include e('bg'){

@@ -5,7 +5,17 @@
       v-if="!isShownCharacterSelector && currentPrompt.model > 0"
       :model="currentPrompt.model"
       :extra="currentPrompt.nested"
-    />
+    >
+     <!-- Coupon Component -->
+      <Coupon class="screen__slot"
+        v-if="currentPrompt.isCoupon"
+        :type="endingScene.type"
+        :model="endingScene.model"
+        :name="endingScene.name"
+        :title="endingScene.title"
+      />
+    </Screen>   
+
     <!-- Character Selector Component -->
     <CharacterSelector v-if="isShownCharacterSelector"/>
 
@@ -34,18 +44,22 @@
 </template>
 
 <script>
+  import EventBus from '@/utils/eventBus';
+
   import Prompt from '@/components/Prompt/Prompt';
   import CharacterSelector from '@/components/Character/Entry';
 
   import Question from '@/components/Question/List';
-  import Screen from '@/components/Screens/Screen';
 
-  import EventBus from '@/utils/eventBus';
+  import Coupon from '@/components/Screens/Coupon';
+  import Screen from '@/components/Screens/Screen';
+  
   export default {
-    props: ['scene', 'promptIdx', 'isLastPrompt'],
+    props: ['scene', 'endingScene', 'promptIdx', 'isLastPrompt'],
     components: {
       Prompt,
       Question,
+      Coupon,
       Screen,
       CharacterSelector
     },

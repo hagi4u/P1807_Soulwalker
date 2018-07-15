@@ -144,7 +144,7 @@
       transform: translateX(-50%);
 
       @include breakpoint(max-height, 800px){
-        top:88px;
+        top:3%;
       }
 
       &:after{
