@@ -6,15 +6,26 @@
       v-if="gameState === 'start'" 
       @onStartButtonClick="handleStartButtonClick"
     />
-    
+    <Loading 
+      v-if="gameState === 'loading'" 
+      @onLoadingComplete="handleLoadingComplete"
+    />
+
     <SystemContents 
       v-if="isSystem" 
       @click="handleSystemContentsClick"
-    >
-      <Loading v-if="gameState === 'loading'" @onLoadingComplete="handleLoadingComplete"/>
-      <Saving v-else-if="gameState === 'saving'" @onCompleteSave="handleCompleteSave"/>
-      <Ending v-else-if="gameState === 'end'" @onCompleteSave="handleCompleteSave"/>
-      <p v-else v-html="this.scene.prompt[this.promptIdx].prompt" class="system-screen__content"></p>
+    >      
+      <Saving 
+        v-if="gameState === 'saving'" 
+        @onCompleteSave="handleCompleteSave"
+      />
+      <Ending 
+        v-else-if="gameState === 'end'" 
+        @onCompleteSave="handleCompleteSave"
+      />
+      <p class="system-screen__content"
+        v-else 
+        v-html="this.scene.prompt[this.promptIdx].prompt"></p>
     </SystemContents>
 
     <MainContents class="app__screen" 
@@ -140,7 +151,7 @@ export default {
       return obj
     },
     isSystem(){
-      return this.scene.prompt[this.promptIdx].user === 'system' || this.gameState === 'loading'
+      return this.scene.prompt[this.promptIdx].user === 'system'
     },
     bgType(){
       return this.gameState === 'start' ? 'start' : this.scene.prompt[this.promptIdx].bg
