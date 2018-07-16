@@ -144,7 +144,7 @@
       position:absolute;
       top:0;
       bottom:0;
-      left:53%;
+      left:48%;
       z-index:11;
       > img{
         display:block;

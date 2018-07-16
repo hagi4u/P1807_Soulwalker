@@ -109,7 +109,9 @@
 <style lang="scss">
   @import '@/utils/sass/layouts/bem.scss';
   @import '@/utils/sass/layouts/mediaquery.scss';
+  @import '@/utils/sass/typography/typography.scss';
   .start-screen{
+    @include disabledDrag();
     @include e('model'){
       position:absolute;
       top:5px;

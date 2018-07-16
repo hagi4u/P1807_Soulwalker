@@ -104,7 +104,7 @@
     @include m('nested'){
       .screen{
         @include e('model'){
-          right:28%;
+          right:22%;
           > img{
             height:100%;
           }

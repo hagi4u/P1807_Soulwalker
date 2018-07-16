@@ -142,6 +142,7 @@
 <style lang="scss">
   @import '@/utils/sass/layouts/bem.scss';
   @import '@/utils/sass/layouts/mediaquery.scss';
+  @import '@/utils/sass/typography/typography.scss';
   .prompt{
     position:absolute;
     width:661px;
@@ -150,6 +151,8 @@
     z-index:100;
     -ms-transform:translateX(-50%);
     transform:translateX(-50%);
+
+    @include disabledDrag();
     @include breakpoint(max-width, 1440px){
       top:60%;
     }
