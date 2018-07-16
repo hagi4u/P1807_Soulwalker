@@ -72,6 +72,7 @@
     $breakpoint: 1280px;
     @include breakpoint(max-width, 1024px){
       &.screen__slot{
+        transform: none;
         left:auto;
         right:0;
       }
@@ -81,6 +82,7 @@
         max-width:684px;
       }
     }
+    
     @include e('disp'){
       position:absolute;
       width:100%;

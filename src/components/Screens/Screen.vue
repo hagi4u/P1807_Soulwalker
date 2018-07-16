@@ -88,6 +88,11 @@
     right:0;
     bottom:0;
     left:0;
+    
+    @include iPad(){
+      transform: scale(0.9);
+      transform-origin: top center;
+    }
 
     @include e('model'){
       > img{
@@ -99,7 +104,13 @@
         margin-top:-8%;
         margin-right:auto;
         margin-left:auto;
+        
 
+        @include iPad(){
+          position:relative;
+          left:50% !important;
+          transform: translateX(-50%) !important;;
+        }
         @include breakpoint(max-height, 800px){
           margin-top:-15%;
         }

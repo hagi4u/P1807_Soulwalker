@@ -217,6 +217,7 @@ export default {
 
 <style lang="scss">
   @import '@/utils/sass/base/reset.scss';
+  @import '@/utils/sass/layouts/mediaquery.scss';
   html,
   body,
   .app{
@@ -228,21 +229,13 @@ export default {
 
   html{
     /* iPadPro 는 높이값이 높아 어쩔 수 없이 화면을 자름*/
-    @media only screen 
-      and (min-device-width: 1024px) 
-      and (max-device-width: 1366px) 
-      and (orientation: portrait) 
-      and (-webkit-min-device-pixel-ratio: 1.5) {
+    @include iPadPro(){
       background-color:#000;
     }
   }
   .app{
     /* iPadPro 는 높이값이 높아 어쩔 수 없이 화면을 자름*/
-    @media only screen 
-      and (min-device-width: 1024px) 
-      and (max-device-width: 1366px) 
-      and (orientation: portrait) 
-      and (-webkit-min-device-pixel-ratio: 1.5) {
+    @include iPadPro(){
       height: 70%;
       transform: translateY(-50%);
       top: 50%;

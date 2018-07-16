@@ -1,5 +1,5 @@
 <template>
-  <main class="screen">
+  <main class="contents">
     <!-- n-Layer ScreenComponent -->
     <Screen
       v-if="!isShownCharacterSelector && currentPrompt.model > 0"
@@ -108,6 +108,6 @@
   @import '@/utils/sass/layouts/bem.scss';
   @import '@/utils/sass/layouts/mediaquery.scss';
 
-  .screen{
+  .contents{
   }
 </style>
