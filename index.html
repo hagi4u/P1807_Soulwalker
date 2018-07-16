@@ -11,6 +11,10 @@
     
     <link rel="shortcut icon" type="image/x-icon" href="../images/favicon.ico" />
     <script src="../js/lib/jquery-1.11.1.js"></script>
+    <script
+  src="https://code.jquery.com/jquery-1.12.4.min.js"
+  integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="
+  crossorigin="anonymous"></script>
     <link rel="stylesheet" href="../css/event.css" />
 
   </head>
@@ -20,7 +24,22 @@
     <script>
       window.App = window.App || {};
       window.App.shareFacebook = function(){
-        alert('페이스북 공유하는 함수 작성을 이곳에서 해 주세요.')
+        alert('페이스북 공유하는 함수 작성을 window.App.shareFacebook 함수에서 해 주세요.')
+      }
+      window.App.getCouponNumber = function(resultId){
+        var toArrayResult = (resultId+'').split('');
+        var couponType = toArrayResult[toArrayResult.length-1];
+
+        // couponType
+        // 1 = 액션
+        // 2 = 코스튬
+        // 3 = 마이룸
+        console.log(couponType+'에 대해 ajax call 하는 함수 만들기')
+        // $.get('/sample', function(res){
+        //   $('#coupon').val(data.coupon);
+        // })
+
+        $('#coupon').val('5432W 7981 QWE9 3B37');        
       }
       window.App.ToggleCouponModal = function(operation){
         alert(operation)

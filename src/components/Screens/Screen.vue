@@ -99,18 +99,22 @@
         margin-top:-8%;
         margin-right:auto;
         margin-left:auto;
+
+        @include breakpoint(max-height, 800px){
+          margin-top:-15%;
+        }
       }
     }
     @include m('nested'){
+      $breakpoint: 1600px;
       .screen{
         @include e('model'){
           right:22%;
           > img{
             height:100%;
           }
-
-          @include breakpoint(max-width, 1023px){
-            right:50%;
+          @include breakpoint(max-width, $breakpoint){
+            right:30%
           }
         }
         @include e('slot'){
@@ -126,10 +130,10 @@
 
           list-style:none;
 
-          @include breakpoint(max-width, 1024px){
-            top:140px;
-            max-width:500px;
-            margin-left: -124px;
+          @include breakpoint(max-width, $breakpoint){
+            top:10%;
+            max-width: 50%;
+            margin-left: 0;
           }
         }
         @include e('screenshot-item'){

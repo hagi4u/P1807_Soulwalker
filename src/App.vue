@@ -98,8 +98,8 @@ export default {
         }
       });
       
-      if(this.resultId){
-        console.log('goal_cid 에 대해 ajax call 하는 함수 만들기')
+      if(this.resultId && window.App){
+        window.App.getCouponNumber(this.resultId);
       }
     },
     handleSystemContentsClick(){

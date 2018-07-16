@@ -69,6 +69,15 @@
   @import '@/utils/sass/layouts/mediaquery.scss';
   
   .coupon{
+    $breakpoint: 1280px;
+    @include breakpoint(max-width, $breakpoint){
+      &.screen__slot{
+        max-width:684px;
+        transform:translateX(-50%);
+
+        transition:none !important;
+      }
+    }
     @include e('disp'){
       position:absolute;
       width:100%;
@@ -81,6 +90,9 @@
         left: 42px;
 
         text-align:center;
+      }
+      @include breakpoint(max-width, $breakpoint){
+        max-width:none;
       }
     }
     @include e('title'){
