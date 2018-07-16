@@ -70,12 +70,15 @@
   
   .coupon{
     $breakpoint: 1280px;
+    @include breakpoint(max-width, 1024px){
+      &.screen__slot{
+        left:auto;
+        right:0;
+      }
+    }
     @include breakpoint(max-width, $breakpoint){
       &.screen__slot{
         max-width:684px;
-        transform:translateX(-50%);
-
-        transition:none !important;
       }
     }
     @include e('disp'){

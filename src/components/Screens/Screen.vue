@@ -135,6 +135,12 @@
             max-width: 50%;
             margin-left: 0;
           }
+
+          @include breakpoint(max-width, 800px){
+            max-width:90%;
+            transform:translateX(-50%);
+            transition:none !important;
+          }
         }
         @include e('screenshot-item'){
           float:left;
