@@ -1,12 +1,225 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="ko">
   <head>
     <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="imagetoolbar" content="no">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <title>soulwalker</title>
+    <meta name="keywords" content="소울워커, 스마일게이트, 메가포트">
+    <meta name="description" content="소울워커">
+    <title>소울워커 - 세기말 액션 RPG</title>
+    
+    <link rel="shortcut icon" type="image/x-icon" href="../images/favicon.ico" />
+    <script src="../js/lib/jquery-1.11.1.js"></script>
+    <script
+  src="https://code.jquery.com/jquery-1.12.4.min.js"
+  integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="
+  crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="../css/event.css"/>
+    <style>
+      
+        #modal{
+          display:none;
+        }
+        .modal{
+          position:fixed;
+          top:0;
+          bottom:0;
+          left:0;
+          right:0;
+          background-color:rgba(0,0,0,.8);
+          z-index:1000;
+        }
+        .modal-coupon{
+          position:absolute;
+          top:50%;
+          left:50%;
+
+          width:811px;
+          height:461px;
+          padding-top: 61px;
+          padding-left: 46px;
+          padding-right: 46px;
+
+
+          background-image:url('../images/bg-popup.png');
+          -ms-transform:translate(-50%, -50%);
+          transform:translate(-50%, -50%);
+        }
+        .modal-coupon__heading{
+          font-size: 31px;
+          text-align: center;
+        }
+        .modal-coupon__heading > p{
+          font-size: 20px;
+          margin-top: 15px;
+        }
+        .modal-coupon__form{
+          width:717px;
+          height:141px;
+
+          margin-top: 17px;
+          padding-top: 27px;
+          padding-left: 28px;
+          padding-right: 28px;
+
+          background-image:url('../images/bg-popup-form.png');
+        }
+        .modal-coupon__notice{
+          font-size:17px;
+          color:#FFF;
+        }
+        .modal-coupon__notice > strong{
+          color:#fff200;        
+        }
+        .modal-coupon__form-item{
+          width: 100%;
+          height: 60px;
+          border-radius: 14px;
+          margin-top: 16px;
+          overflow:hidden;
+          background-color: #FFF;
+        }
+        .modal-coupon__form-item > input[type="text"]{
+          -webkit-appearance: none;
+          border: 0;
+          padding: 0;
+          margin: 0;
+          width: 512px;
+          padding-top: 20px;
+          padding-bottom: 20px;
+          padding-left: 28px;
+          font-size: 17px;
+          vertical-align: top;
+        }
+        .modal-coupon__form-item > button{
+          width: 144px;
+          margin-top: 7px;
+        }
+        .modal-coupon__notify{
+          margin-top:17px;
+        }
+        .modal-coupon__notify> h4{
+          float:left;
+          width:221px;
+          height:99px;
+          text-align: center;
+          font-size:20px;
+          line-height:99px;
+          background-image:url('../images/bg-popup-notify.png');
+        }
+        .modal-coupon__notify> ul{
+          float: left;
+          list-style:none;
+          margin:0;
+          padding:0;
+          margin-left: 20px;
+          color:#00302c;
+          font-size:16px;
+          letter-spacing: -1px;
+        }
+        .modal-coupon__notify> ul > li{
+          margin-top:12px;
+        }
+        .modal__btn-close{
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          margin-top: -240px;
+          margin-left: 407px;
+          
+        }
+        @media screen and (max-width:980px){
+          .modal__btn-close{
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin-top: -280px;
+            margin-left:0;
+            transform:translateX(-50%);
+          }
+      }
+    </style>
   </head>
   <body>
+    <input id="coupon" type="hidden" value="5432W 7981 QWE9 3B37">
     <div id="app"></div>
+    <div id="modal" class="modal">
+      <div id="coupon-form" class="modal-coupon">
+        <h3 class="modal-coupon__heading">
+          성소 데이트 시뮬레이션 쿠폰 6종 사용하기
+          <p>쿠폰 사용기간 : 2018.07.25(수)~2018.10.31(수)</p>
+        </h3>
+        <form class="modal-coupon__form">
+          <p class="modal-coupon__notice">
+            ● <strong>성소가 알려준 쿠폰번호 12자리를 입력하신 후</strong>~ 우측 쿠폰 사용하기 버튼을 클릭하세요!
+          </p>
+          <div class="modal-coupon__form-item">
+          <input type="text" placeholder="쿠폰번호 12자리를 '-'없이 입력하세요.">
+          <button type="button" id="btn-coupon-dispatch">
+            <img src="../images/btn-popup-using.png" alt="쿠폰 사용하기">
+          </button>
+          </div>
+        </form>
+        <div class="modal-coupon__notify">
+          <h4>
+            쿠폰 사용 시 유의사항
+          </h4>
+          <ul>
+            <li>- 쿠폰 6종은 <b>각각 계정 당 1회에 한해 사용</b>하실 수 있습니다.</li>
+            <li>- 쿠폰 사용 시 보상 아이템은 <b>게임 내 H.E.M.S 계정 메시지로 지급</b>됩니다.</li>
+            <li>- 쿠폰 6종을 통해 획득한 보상 아이템은 <b>이동 / 환불 / 취소가 불가</b>합니다.</li>
+          </ul>
+        </div>
+      </div>
+      <button class="modal__btn-close" id="modal-close">
+        <img src="../images/btn-popup-close.png" alt="닫기">
+      </button>
+    </div>
+    <script>
+      window.App = window.App || {};
+      window.App.shareFacebook = function(){
+        alert('페이스북 공유하는 함수 작성을 이곳 window.App.shareFacebook 함수에서 해 주세요.')
+      }
+      window.App.getCouponNumber = function(resultId){
+        var toArrayResult = (resultId+'').split('');
+        var couponType = toArrayResult[toArrayResult.length-1];
+
+        // couponType
+        // 1 = 액션
+        // 2 = 코스튬
+        // 3 = 마이룸
+        console.log(couponType+'에 대해 ajax call 하는 함수 만들기')
+        // $.get('/sample', function(res){
+        //   $('#coupon').val(data.coupon);
+        // })
+
+        $('#coupon').val('5432W 7981 QWE9 3B37');        
+      }
+      window.App.ToggleCouponModal = function(operation){
+        var el = document.getElementById('modal');
+
+        if(operation === 'open'){
+          // 모달 오픈 전 로그인 체크 로직
+          el.style.display = 'block';
+        } else {
+          el.style.display = 'none';
+        }
+      }
+
+      window.onload = function(){
+        var modalCloseButton = document.getElementById('modal-close');
+        var couponDispatchButton = document.getElementById('btn-coupon-dispatch');
+
+        modalCloseButton.addEventListener('click', function(e){
+          window.App.ToggleCouponModal('close');
+        }, true);
+
+        couponDispatchButton.addEventListener('click', function(e){
+          alert('이곳에 쿠폰 사용에 대한 함수를 실행하는 구문을 작성 해 주세요.')
+        })
+      }
+    </script>
     <!-- built files will be auto injected -->
   </body>
 </html>
