@@ -13,6 +13,7 @@
         :model="endingScene.model"
         :name="endingScene.name"
         :title="endingScene.title"
+        :resultId="endingScene.resultId"
       />
     </Screen>   
 
@@ -55,7 +56,7 @@
   import Screen from '@/components/Screens/Screen';
   
   export default {
-    props: ['scene', 'endingScene', 'promptIdx', 'isLastPrompt'],
+    props: ['scene', 'endingScene', 'promptIdx', 'resultId', 'isLastPrompt'],
     components: {
       Prompt,
       Question,

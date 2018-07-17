@@ -34,6 +34,7 @@
       :scene="scene" 
       :endingScene="endingScene"
       :promptIdx="promptIdx"
+      :resultId="resultId"
       :isLastPrompt="isLastPrompt"
     />
     <BG :type="bgType"/>
@@ -147,6 +148,8 @@ export default {
         obj.type = 2;
         obj.model = this.resultId == 103 ? 110 : 39;
       }
+
+      obj.resultId = this.resultId;
 
       return obj
     },
