@@ -34,10 +34,10 @@
           <div class="start-screen__prompt">
             <img src="@/assets/images/start/prompt.png" alt="">
             <vue-typed-js
-              :strings="['지금 저랑 데이트 할래요?']"
+              :strings="['지금 저랑 데이트 할래요?', '게임을 시작하시겠습니까?']"
               :typeSpeed="50"
-              :startDelay="500"
-              :backSpeed="20"
+              :startDelay="700"
+              :backSpeed="40"
               :smartBackspace="true"
               class="start-screen__prompt-content"
             >

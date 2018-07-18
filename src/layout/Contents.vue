@@ -13,6 +13,7 @@
         :model="endingScene.model"
         :name="endingScene.name"
         :title="endingScene.title"
+        :coupon="endingScene.coupon"
         :resultId="endingScene.resultId"
       />
     </Screen>   

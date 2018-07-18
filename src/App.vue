@@ -1,6 +1,8 @@
 <template>
   <div class="app">
-    <Header class="app__header"/>
+    <Header class="app__header"
+      :isSystem="isSystem"
+    />
 
     <StartContents class="app__start-screen" 
       v-if="gameState === 'start'" 
@@ -100,7 +102,7 @@ export default {
       });
       
       if(this.resultId && window.App){
-        window.App.getCouponNumber(this.resultId);
+        // window.App.getCouponNumber(this.resultId);
       }
     },
     handleSystemContentsClick(){
@@ -127,26 +129,29 @@ export default {
       if(this.resultId == 101 || this.resultId == 111){
         // 26 = 기존 , 37 = 신규
         obj.text = '짜잔!! 화끈한 액션을 좋아하는 우리 오빠를 위한';
-        obj.title = "화려한 스킬 연계와 화끈한 액션의 재미를<br/>가장 중요하기 생각하는 당신!!";
+        obj.title = "화려한 스킬 연계와 화끈한 액션의 재미를<br/>가장 중요하게 생각하는 당신";
         obj.name = '파이트';
         obj.type = 0;
         obj.model = this.resultId == 101 ? 26 : 37;
+        obj.coupon = this.resultId == 101 ? 'ilovesoulworker2' : 'ilovesoulworker1';
       }
       if(this.resultId == 102 || this.resultId == 112){
         // 27 = 기존 , 38 = 신규
         obj.text = '짜잔!! 스타일에 죽고 스타일에 사는 우리 오빠를 위한';
-        obj.title = "언제 어디서나 자신의 개성을 최우선으로 생각하는<br/>스타일에 죽고 스타일에 사는 당신!";
+        obj.title = "언제 어디서나 자신의 개성과 스타일을<br/>최우선으로 생각하는 당신";
         obj.name = '패션피플';
         obj.type = 1;
         obj.model = this.resultId == 102 ? 27 : 38;
+        obj.coupon = this.resultId == 102 ? 'thankusoulworker2' : 'thankusoulworker1';
       }
       if(this.resultId == 103 || this.resultId == 113){
         // 110 = 기존, 39 = 신규
         obj.text = '짜잔!! 럭셔리한 우리 오빠의 마이룸을 위해';
-        obj.title = "언제나 깔끔하고 럭셔리한 나만의 공간을<br/>최우선으로 생각하는 당신!";
+        obj.title = "언제나 깔끔하고 럭셔리한 나만의 공간을<br/>최우선으로 생각하는 당신";
         obj.name = '럭셔리';
         obj.type = 2;
         obj.model = this.resultId == 103 ? 110 : 39;
+        obj.coupon = this.resultId == 103 ? 'soulworkerforever2' : 'soulworkerforever1';
       }
 
       obj.resultId = this.resultId;

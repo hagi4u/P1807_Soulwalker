@@ -2,7 +2,8 @@
   <header class="header">
     <h1 class="bi">
       <a href="http://soulworker.game.onstove.com/">
-        <img src="@/assets/images/common/bi.png" alt="Soulwalker">
+        <img src="@/assets/images/common/bi_white.png" alt="Soulwalker" v-if="isSystem">
+        <img src="@/assets/images/common/bi.png" alt="Soulwalker" v-else>
       </a>
     </h1>
     <nav class="header__nav">
@@ -23,6 +24,7 @@
 <script>
   import MuteSwitch from '@/components/Switch/Switch';
   export default {
+    props: ['isSystem'],
     components: {
       MuteSwitch
     },

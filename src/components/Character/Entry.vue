@@ -50,37 +50,37 @@
           key: 1,
           m_key: 28,
           name: '하루 에스티아',
-          video: 'zChGrWABF6s',
+          video: 'neglpAdNeEg',
           text: '하루에스티아!! 스탠다드한 스타일.<br/>안정성이 뛰어나고 대감 한 방 한 방이 묵직하지!'
         },{
           key: 2,
           m_key: 32,
           name: '어원 아크라이트',
-          video: 'zChGrWABF6s',
+          video: 'UEr06OEP24w',
           text: '어원 아크라이트!! 남자 캐릭터는 의외인데?<br/>쌍권총 빵빵!! 정말 플레이스타일이 화려한 친구야'
         },{
           key: 3,
           m_key: 33,
           name: '릴리 블룸메르헨',
-          video: 'zChGrWABF6s',
+          video: 'zmP89uRP6DQ',
           text: '릴리 블룸메르헨!! 소름끼치는 광기와 잔혹함을<br/>숨기고 있는 그녀 위력적인 광역공격이 일품이지!'
         },{
           key: 4,
           m_key: 34,
           name: '스텔라 유니벨',
-          video: 'zChGrWABF6s',
+          video: 'zxeIyayR7Tc',
           text: '스텔라 유니벨! 하울링 가득한 기타연주.<br/>개성 넘치는 전투 스타일, 정말 느낌 있는 친구지!'
         },{
           key: 5,
           m_key: 35,
           name: '이리스 유마',
-          video: 'zChGrWABF6s',
-          text: '이리스 유마!! 마지막 승급 업데이트의 주인공.<br/>거포에서 뿜어져 나오는 압도적 화력 승급으로<br/>더 핫 해진 친구지'
+          video: 'ZYLfYqbM5ZI',
+          text: '이리스 유마!! 마지막 승급 업데이트의 주인공.<br/>거포에서 뿜어져 나오는 압도적 화력, 이번 승급으로 더 핫 해진 친구지!'
         },{
           key: 6,
           m_key: 36,
           name: '진 세이파츠',
-          video: 'zChGrWABF6s',
+          video: 'BOiS48aptko',
           text: '진 세이파츠!! 남자라면 역시 격투가.<br/>콤보 공격이 정말 시원시원한 친구야'
         }]
       }
@@ -132,7 +132,8 @@
   .character{
     @include e('entry'){
       position:absolute;
-      top:158px;
+      // top:158px;
+      top:98px;
       left:50%;
 
       max-width:761px;
@@ -157,6 +158,7 @@
       position:relative;
       float:left;
       width:50%;
+      margin-top:4px;
     }
     @include e('button'){
       position:absolute;

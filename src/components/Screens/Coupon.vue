@@ -3,7 +3,9 @@
     <div class="coupon__disp" v-show="!isFeature">
       <img :src="require(`@/assets/images/coupon/${type}.png`)" alt="">
       <div class="inner">
-        <h2 class="coupon__title" v-html="title"></h2>
+        <h2 class="coupon__title" >
+          <span v-html="title"></span>!
+        </h2>
         <h3 class="coupon__description">
           당신은 {{name}}워커!! <br/>
           소울워커 취향저격 스페셜 쿠폰
@@ -27,7 +29,9 @@
     <div class="coupon__disp coupon__disp--feature" v-show="isFeature">
       <img :src="require(`@/assets/images/coupon/bg-coupon.png`)" alt="">
       <div class="inner">
-        <h2 class="coupon__title" v-html="title"></h2>
+        <h2 class="coupon__title">
+          <span v-html="title"></span>을 위한 취향저격 패키지!
+        </h2>
         <div class="coupon__container">
           <ul class="coupon__gifts" :class="getGiftClassName">
              <li class="coupon__gifts-item" 
@@ -65,13 +69,13 @@
 
   export default {
     name: 'Coupon',
-    props: ['type', 'model', 'name', 'title', 'resultId'],
+    props: ['type', 'model', 'name', 'title', 'resultId', 'coupon'],
     data(){
       return {
         clipboard: null,
         isFeature: false,
         giftHoverIndex: -1,
-        no: document.getElementById('coupon').value,
+        no: this.coupon,
         gift: [
           {
             id: 101,
@@ -189,6 +193,9 @@
   
   .coupon{
     $breakpoint: 1280px;
+    h1,h2,h3,h4,h5,h6,p{
+      font-family: 'Nanum Gothic', sans-serif;
+    }
     @include breakpoint(max-width, 1024px){
       &.screen__slot{
         transform: none;
@@ -220,11 +227,11 @@
       }
     }
     @include e('title'){
-      font-size:25px;
+      font-size:22px;
       color:#ec008c;
     }
     @include e('description'){
-      margin-top:30px;
+      margin-top:33px;
       font-size:31px;
       color:#00302c;
     }
@@ -232,6 +239,7 @@
       margin-top:45px;
       @at-root .coupon__disp--feature &{
         margin-top: 35px;
+        // margin-top: 38px;
       }
       &:after{
         content:'';
@@ -291,14 +299,16 @@
       overflow:hidden;
 
       @at-root .is-fashion &{
-        margin-top: -32px;
-        width:24% !important;
+        margin-top: -42px;
+        width:22% !important;
         &:nth-of-type(1){
-          width: 52% !important;
-          height:167px;
+          position: relative;
+          top: 22px;
+          width: 56% !important;
+          height:180px;
           &:hover{
             > img{
-              margin-top:-167px;
+              margin-top:-180px;
             }
           }
         }
