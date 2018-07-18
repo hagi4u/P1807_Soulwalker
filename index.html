@@ -21,6 +21,14 @@
         #modal{
           display:none;
         }
+        .modal h3,
+        .modal h4,
+        .modal p,
+        .modal li{
+          font-family: 'Nanum Gothic', sans-serif;
+          letter-spacing:-0.1em;
+        }
+
         .modal{
           position:fixed;
           top:0;
@@ -152,10 +160,10 @@
         </h3>
         <form class="modal-coupon__form">
           <p class="modal-coupon__notice">
-            ● <strong>성소가 알려준 쿠폰번호 12자리를 입력하신 후</strong>~ 우측 쿠폰 사용하기 버튼을 클릭하세요!
+            ● <strong>성소가 알려준 쿠폰번호를 입력하신 후</strong>~ 우측 쿠폰 사용하기 버튼을 클릭하세요!
           </p>
           <div class="modal-coupon__form-item">
-          <input type="text" placeholder="쿠폰번호 12자리를 '-'없이 입력하세요.">
+          <input type="text" placeholder="쿠폰번호를 '-'없이 입력하세요.">
           <button type="button" id="btn-coupon-dispatch">
             <img src="../images/btn-popup-using.png" alt="쿠폰 사용하기">
           </button>

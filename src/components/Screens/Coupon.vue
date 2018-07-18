@@ -326,7 +326,7 @@
     }
     @include e('btn-copy'){
       display:inline-block;
-      margin-left: 4px;
+      margin-left: 24px;
       vertical-align: middle;
     }
     @include e('btn-feature'){
