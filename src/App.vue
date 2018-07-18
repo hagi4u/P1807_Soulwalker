@@ -241,6 +241,13 @@ export default {
       background-color:#000;
     }
   }
+  .app,
+  .modal{
+    h1,h2,h3,h4,input,button{
+      letter-spacing: 0;
+      font-family: 'Nanum Gothic', sans-serif;
+    }
+  }
   .app{
     /* iPadPro 는 높이값이 높아 어쩔 수 없이 화면을 자름*/
     @include iPadPro(){

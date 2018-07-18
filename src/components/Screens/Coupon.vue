@@ -211,8 +211,7 @@
     
     @include e('disp'){
       position:absolute;
-      width:100%;
-      max-width: 684px;
+      width:684px;
       > .inner{
         position: absolute;
         top: 46px;
