@@ -1,4 +1,4 @@
-import BGSound from '../assets/sounds/bg3.mp3'
+import BGSound from '../assets/sounds/bg.mp3'
 import TypeWritterSound from '../assets/sounds/typewritter.mp3'
 import ButtonSound from '../assets/sounds/button.mp3'
 
