@@ -81,6 +81,7 @@
 <style lang="scss">
   @import '@/utils/sass/layouts/bem.scss';
   @import '@/utils/sass/layouts/mediaquery.scss';
+  $high-screen-height: 1081px;
 
   .screen{
     position:absolute;
@@ -95,6 +96,9 @@
     }
 
     @include e('model'){
+      @include breakpoint(min-height, $high-screen-height){
+        min-height:100%;
+      }
       > img{
         top:0;
         bottom:0;
@@ -113,6 +117,17 @@
         }
         @include breakpoint(max-height, 800px){
           margin-top:-15%;
+        }
+        @include breakpoint(min-height, $high-screen-height){
+          // parallax-js 패키지가 inline 으로 top을 선점하기에 important 구문 작성
+          position:absolute !important;
+          top:auto !important;
+          left:0 !important;
+          right:0;
+          bottom: -5%;
+          height: 110%;
+          margin-top:0;
+
         }
       }
     }
@@ -145,6 +160,10 @@
             top:10%;
             max-width: 50%;
             margin-left: 0;
+          }
+
+          @include breakpoint(min-height, $high-screen-height){
+            top:15%;
           }
 
           @include breakpoint(max-width, 800px){

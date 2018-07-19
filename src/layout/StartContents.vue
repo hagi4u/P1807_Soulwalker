@@ -117,6 +117,7 @@
       top:5px;
       right:0;
       left:0;
+      bottom:0;
 
       width:100%;
       max-width:1185px;
@@ -124,6 +125,16 @@
       margin-left:auto;
 
       z-index:15;
+
+      > img{
+        // parallax-js 패키지가 inline 으로 top을 선점하기에 important 구문 작성
+        position:absolute !important;
+        top:auto !important;
+        left:0 !important;
+        right:0;
+        bottom: -5%;
+        margin-top:0;
+      }
       
       @include breakpoint(max-width, 1024px){
         top:auto;
@@ -138,9 +149,9 @@
         and (max-device-width : 1024px) 
         and (orientation : landscape) {
         
-          top:0;
-          bottom:auto;
-        }
+        top:0;
+        bottom:auto;
+      }
     }
     @include e('title'){
       position:absolute;
