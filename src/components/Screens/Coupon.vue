@@ -329,10 +329,14 @@
       vertical-align: middle;
     }
     @include e('btn-feature'){
-      margin-top:20px;
-      @at-root .coupon__disp--feature &{
-        margin-top:8px;
-      }
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translate(-50%);
+      // margin-top:20px;
+      // @at-root .coupon__disp--feature &{
+      //   margin-top:8px;
+      // }
     }
   }
 </style>

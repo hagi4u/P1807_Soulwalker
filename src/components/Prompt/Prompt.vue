@@ -175,6 +175,7 @@
       height: 142px;
       top: 60px;
       left: 54px;
+      color:#666;
       letter-spacing: -1px;
     }
     @include e('typing'){

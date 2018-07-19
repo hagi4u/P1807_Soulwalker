@@ -165,6 +165,7 @@
     }
     @include e('prompt'){
       padding-top:30px;
+      color:#666;
     }
     @include e('prompt-content'){
       position:absolute;
