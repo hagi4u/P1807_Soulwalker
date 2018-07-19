@@ -60,6 +60,7 @@
       padding-bottom:17px;
       font-size:20px;
       vertical-align: middle;
+      color:#666;
     }
     @include e('button'){
       position:absolute;
