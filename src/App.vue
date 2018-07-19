@@ -116,7 +116,11 @@ export default {
     },
     handleCompleteSave(){
       this.gameState = 'end'
-    }
+    },
+    isFickle(){
+      // 성소의 마이룸에 무반응을 처음에 반응했다가 무반응으로 태새전환 시
+      return Engine.currentNodeId == 3 && Engine.history.length === 3
+    },
   },
   computed: {
     endingScene(){
@@ -180,6 +184,11 @@ export default {
       }
     },
     scene(){
+      // 20180719 노트 이동 로직 추가
+      if(this.isFickle()){
+        Engine.nextPrompt();
+      }
+      
       this.promptIdx = Engine.currentPromptId;
       this.isLastPrompt = Engine.isLastPrompt();
     }
@@ -197,8 +206,13 @@ export default {
       this.promptIdx = Engine.currentPromptId;
     });
 
-    EventBus.$on('prevPrompt', () => {
+    EventBus.$on('prevPrompt', () => {      
       Engine.prevPrompt();
+
+      // 20180719 노트 이동 로직 추가
+      if(this.isFickle()){
+        EventBus.$emit('goPrevNode');
+      }
 
       if(this.promptIdx === 0){
         this.scene = Engine.getNode();
