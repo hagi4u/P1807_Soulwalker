@@ -7,7 +7,7 @@
       </a>
     </h1>
     <nav class="header__nav">
-      <a href="javascript:alert('준비 중 입니다')" target="_blank">
+      <a href="http://soulworker.game.onstove.com/Promotion/YumaUpgrade/" target="_blank">
         <img src="@/assets/images/common/ico_iris.png" alt="이리스 승급 업데이트 바로가기">
       </a>
       <a href="http://soulworker.game.onstove.com/" target="_blank">

@@ -133,7 +133,7 @@ export default {
         obj.name = '파이트';
         obj.type = 0;
         obj.model = this.resultId == 101 ? 26 : 37;
-        obj.coupon = this.resultId == 101 ? 'ilovesoulworker2' : 'ilovesoulworker1';
+        obj.coupon = this.resultId == 101 ? 'withsoulworker' : 'thankyouworker';
       }
       if(this.resultId == 102 || this.resultId == 112){
         // 27 = 기존 , 38 = 신규
@@ -142,7 +142,7 @@ export default {
         obj.name = '패션피플';
         obj.type = 1;
         obj.model = this.resultId == 102 ? 27 : 38;
-        obj.coupon = this.resultId == 102 ? 'thankusoulworker2' : 'thankusoulworker1';
+        obj.coupon = this.resultId == 102 ? 'ilikechengxiao' : 'ilovechengxiao';
       }
       if(this.resultId == 103 || this.resultId == 113){
         // 110 = 기존, 39 = 신규
@@ -151,7 +151,7 @@ export default {
         obj.name = '럭셔리';
         obj.type = 2;
         obj.model = this.resultId == 103 ? 110 : 39;
-        obj.coupon = this.resultId == 103 ? 'soulworkerforever2' : 'soulworkerforever1';
+        obj.coupon = this.resultId == 103 ? 'playsoulworker' : 'soulworkerdate';
       }
 
       obj.resultId = this.resultId;

@@ -1,7 +1,7 @@
 <template>
   <div>
     <Button @click="handleClick()">
-      <template v-if="isMuted">
+      <template v-if="!isMuted">
         <img src="@/assets/images/common/ico_music_on.png" alt="ON">
       </template>
       <template v-else>
