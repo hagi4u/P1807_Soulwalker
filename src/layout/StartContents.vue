@@ -127,7 +127,6 @@
       z-index:15;
 
       > img{
-
         @include breakpoint(min-height, 1081px){
           // parallax-js 패키지가 inline 으로 top을 선점하기에 important 구문 작성
           position:absolute !important;
