@@ -12,7 +12,9 @@ import scenario from '@/assets/scenario.json';
 const initialHistory = [];
 
 export default {
+
   scenario,
+  isLockPromptId: false,
   history: initialHistory,
   currentPromptId: 0,
   currentNodeId: initialHistory[initialHistory.length - 1] || 0,
@@ -39,12 +41,17 @@ export default {
       }),
     };
   },
+  setPromptId(id = 0){
+    this.currentPromptId = id;
+
+    return this;
+  },
   // question에서 실행 되어야 하는 코드
   goToNode(cid){
     this.history.push(parseInt(this.currentNodeId));
 
     this.currentNodeId = cid;
-    this.currentPromptId = 0;
+    this.setPromptId(this.isLockPromptId ? this.currentNodeId : null);
 
     return this;
   },
