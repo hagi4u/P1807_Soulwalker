@@ -55,14 +55,14 @@
     },
     methods:{
       getModelAnimDirection(){
-        if(this.isNested){
+        if(this.extra.length > 0){
           return 'model-right'
         }
 
         return this.modelAnim === 'model-right' ? 'model-left' : 'model-right'
       },
       getNestedClassName(){
-        return this.isNested || !!this.$slots.default ? 'screen--nested' : false;
+        return this.extra.length || !!this.$slots.default ? 'screen--nested' : false;
       }
     },
     mounted(){
