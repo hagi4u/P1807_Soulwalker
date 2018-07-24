@@ -51,7 +51,7 @@ export default {
     this.history.push(parseInt(this.currentNodeId));
 
     this.currentNodeId = cid;
-    this.setPromptId(this.isLockPromptId ? this.currentNodeId : null);
+    this.setPromptId(this.isLockPromptId ? this.currentPromptId : 0);
 
     return this;
   },

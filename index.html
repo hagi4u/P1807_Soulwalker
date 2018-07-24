@@ -182,8 +182,10 @@
         if(operation === 'open'){
           // 모달 오픈 전 로그인 체크 로직
           el.style.display = 'block';
+          window.sessionStorage.setItem('isModalOpen', true);
         } else {
           el.style.display = 'none';
+          window.sessionStorage.removeItem('isModalOpen');
         }
       }
 

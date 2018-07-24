@@ -15,7 +15,6 @@
 
     <SystemContents 
       v-if="isSystem" 
-      @click="handleSystemContentsClick"
     >      
       <Saving 
         v-if="gameState === 'saving'" 
@@ -26,6 +25,7 @@
         @onCompleteSave="handleCompleteSave"
       />
       <p class="system-screen__content"
+        @click="handleSystemContentsClick"
         v-else 
         v-html="this.scene.prompt[this.promptIdx].prompt"></p>
     </SystemContents>
@@ -60,17 +60,32 @@ import Loading from '@/components/Loading/Loading.vue';
 
 import EventBus from '@/utils/eventBus';
 import Engine from '@/utils/engine';
+import Store from '@/utils/sessionStorage';
 
 export default {
   name: 'App',
+  props: {
+    initial: {
+      type: Object,
+      default () {
+        return {
+          history: [],
+          promptIdx: null,
+          goal_cid: false,
+          currentNodeId: 0,
+          isModalOpen: false
+        }
+      }
+    }
+  },
   data() {
     return {
-      scene: Engine.getNode(),
+      scene: Engine.getNode(this.initial.currentNodeId),
       gameState: 'start',
-      resultId: false,
+      resultId: this.initial.goal_cid || false,
       isLastPrompt: false,
-      promptIdx: 0,
-      history: Engine.history,
+      promptIdx: this.initial.promptIdx  || 0,
+      history: Engine.history.concat(...this.initial.history),
     }
   },
   components: {
@@ -86,10 +101,9 @@ export default {
   },
   methods: {
     handleChangeEndingScene( cid = 100 ){
-      this.resultId = this.scene.goal_cid;
+      this.resultId = this.initial.goal_cid || this.scene.goal_cid;
       this.scene = JSON.parse(JSON.stringify(Engine.goToNode(cid).getNode()).replace('$END_GOAL', this.endingScene.text));
       this.scene.prompt = this.scene.prompt.map(item => {
-        
         if(item.nested === '$COUPON'){
           item.nested = '';
           item.isCoupon = true;
@@ -100,16 +114,21 @@ export default {
           ...item
         }
       });
-      
-      if(this.resultId && window.App){
-        // window.App.getCouponNumber(this.resultId);
-      }
+
+      Store
+      .setGoalCid(this.resultId)
+      .setCurrentNodeId(cid)
+      .setPromptIdx(Engine.currentPromptId);
     },
     handleSystemContentsClick(){
       EventBus.$emit('nextPrompt');
     },
     handleStartButtonClick(){
       this.gameState = 'loading'
+      
+      if(Store.getStore().history.length === 0){
+        Store.setHistory('[0]').setPromptIdx(0);
+      }
     },
     handleLoadingComplete(){
       this.gameState = 'playing';
@@ -121,6 +140,11 @@ export default {
       // 성소의 마이룸에 무반응을 처음에 반응했다가 무반응으로 태새전환 시
       return Engine.currentNodeId == 3 && Engine.history.length === 3
     },
+    dispatchSaving(){
+      if(this.scene.prompt[this.promptIdx].prompt === '$SAVING'){
+        this.gameState = 'saving';
+      }
+    }
   },
   computed: {
     endingScene(){
@@ -172,10 +196,7 @@ export default {
   watch: {
     promptIdx(){
       this.isLastPrompt = Engine.isLastPrompt();
-
-      if(this.scene.prompt[this.promptIdx].prompt === '$SAVING'){
-        this.gameState = 'saving';
-      }
+      this.dispatchSaving();
 
       if(this.scene.prompt[this.promptIdx].user === 'system'){
         this.delayBuffer = setTimeout(() => {
@@ -188,15 +209,45 @@ export default {
       if(this.isFickle()){
         Engine.nextPrompt();
       }
-      
+
       this.promptIdx = Engine.currentPromptId;
       this.isLastPrompt = Engine.isLastPrompt();
+
+      Store.setPromptIdx(this.promptIdx);
+    }
+  },
+  beforeMount(){
+    if(this.initial.promptIdx){
+      this.promptIdx = Engine.currentPromptId = this.initial.promptIdx || 0;
+    }
+    
+    if( this.initial.history.length > 0 ){
+      Engine.history = this.initial.history;
+      Engine.currentNodeId = this.initial.currentNodeId || 0;
+
+      this.handleStartButtonClick();
+      this.dispatchSaving();
+      
+      this.isLastPrompt = Engine.isLastPrompt();
+    }
+
+    if(this.initial.goal_cid){
+      Engine.isLockPromptId = true;
+      this.handleChangeEndingScene();
+      Engine.isLockPromptId = false;
+    }
+
+    if(this.initial.isModalOpen){
+      // 값 자동입력 (제거)
+      // document.querySelector('.modal-coupon__form-item > input').value = this.endingScene.coupon;
+      window.App.ToggleCouponModal('open');
     }
   },
   mounted(){
     EventBus.$on('nextPrompt', () => {
       if(this.isLastPrompt && this.scene.goal_cid){
-        return this.handleChangeEndingScene();
+        this.handleChangeEndingScene();
+        return true;
       }
       if(this.delayBuffer){
         clearTimeout(this.delayBuffer)
@@ -204,6 +255,8 @@ export default {
       
       Engine.nextPrompt();
       this.promptIdx = Engine.currentPromptId;
+
+      Store.setPromptIdx(this.promptIdx);
     });
 
     EventBus.$on('prevPrompt', () => {      
@@ -219,6 +272,7 @@ export default {
       }
       
       this.promptIdx = Engine.currentPromptId;
+      Store.setPromptIdx(this.promptIdx);
     });
 
     EventBus.$on('goToNode', (cid) => {
@@ -227,10 +281,18 @@ export default {
       }
 
       this.scene = Engine.goToNode(cid).getNode(cid);
+      
+      Store
+      .setCurrentNodeId(this.scene.cid)
+      .setHistory(JSON.stringify(Engine.history));
     });
     
     EventBus.$on('goPrevNode', () => {
       this.scene = Engine.goToParentNode().getNode();
+
+      Store
+      .setCurrentNodeId(this.scene.cid)
+      .setHistory(JSON.stringify(Engine.history));
     })
 
   }

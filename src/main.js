@@ -2,14 +2,13 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import App from './App'
+import Store from './utils/sessionStorage';
 require('babel-polyfill');
 require('normalize.css');
 
-var assetsLoader = require('assets-loader');
-
-
 Vue.config.productionTip = false
 
+var assetsLoader = require('assets-loader');
 const loader = assetsLoader({
   assets: [
     require('@/assets/sounds/bg.mp3'),
@@ -19,8 +18,15 @@ const loader = assetsLoader({
 }).start();
 
 /* eslint-disable no-new */
+// initial settings 값이 필요 하여 render function 형태로 렌더링 되게 수정
+
 new Vue({
   el: '#app',
-  components: { App },
-  template: '<App/>'
+  render(h) {
+    return h(App, {
+      props: {
+        initial: Store.getStore()
+      }
+    })
+  }
 })
