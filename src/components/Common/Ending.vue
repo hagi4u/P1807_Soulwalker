@@ -18,18 +18,21 @@
 
 <script>
   import Button from '@/components/Buttons/Button';
+  import Store from '@/utils/sessionStorage';
   export default {
     components: {
       Button
     },
     methods:{
       handleRestartButtonClick(){
+        Store.resetStore();
         window.location.reload();
       },
       handleShareButtonClick(){
         if(!window.App || !window.App.shareFacebook){
           return alert('window.App.shareFacebook 함수를 작성 해 주세요.')
         }
+        Store.resetStore();
         window.App.shareFacebook();
       }
     }
