@@ -28,7 +28,7 @@
       return {
         isUpdateScreen: true,
         modelParallaxInstance: null,
-        className: false,
+        className: this.getNestedClassName(),
         modelAnim: this.getModelAnimDirection(),
         parallaxOptions: {
           limitY: false,
@@ -48,8 +48,8 @@
     watch:{
       model(){
         this.modelAnim = this.getModelAnimDirection();
-        this.className = this.isNested || !!this.$slots.default ? 'screen--nested' : false ;
-        
+        this.className = this.getNestedClassName();
+
         this.isUpdateScreen = false;
       }
     },
@@ -60,6 +60,9 @@
         }
 
         return this.modelAnim === 'model-right' ? 'model-left' : 'model-right'
+      },
+      getNestedClassName(){
+        return this.isNested || !!this.$slots.default ? 'screen--nested' : false;
       }
     },
     mounted(){
