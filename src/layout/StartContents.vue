@@ -56,6 +56,7 @@
 <script>
   import Vue from 'vue/dist/vue.js';
   import { VueTypedJs } from 'vue-typed-js'
+  import Sound from '@/utils/sounds';
   // import {TweenLite, TimelineMax, Power0} from 'gsap';
 
   import TweenLite from 'gsap/TweenLite';
@@ -80,6 +81,13 @@
       }
     },
     methods: {
+      // handleStartTyping(){
+      //   Sound.play('typeWritter');
+      // },
+      // handleCompleteTyping(){
+      //   this.isButtonsHide = false;
+      //   Sound.stop('typeWritter');
+      // },
       beforeEnterShape(el){
         this.shapeTimeline.add(TweenLite.to(el, 3, {x: 10,y: -40}));
         this.shapeTimeline.add(TweenLite.to(el, 3, {x: 0,y: 0}));

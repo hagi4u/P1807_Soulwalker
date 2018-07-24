@@ -58,7 +58,7 @@ export default {
   goToParentNode(cid = this.history[this.history.length - 1]){
     this.currentPromptId = this.getNode(cid).prompt.length - 1;
     this.currentNodeId = cid; 
-
+    console.log(JSON.stringify(this.history))
     this.history.pop();    
     return this;
   },

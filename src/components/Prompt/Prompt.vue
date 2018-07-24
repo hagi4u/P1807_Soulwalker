@@ -40,6 +40,7 @@
 
   import Button from '@/components/Buttons/Button';  
   import Sound from '@/utils/sounds';
+  import EventBus from '@/utils/eventBus';
 
   Vue.use(VueTypedJs);
   export default {
@@ -80,6 +81,9 @@
         isButtonsHide: true,
         isToggleTypedComponent: false
       }
+    },
+    beforeMount(){
+      EventBus.$emit('toggleSound', false);
     },
     computed:{
       isShownPrevButton(){

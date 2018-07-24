@@ -85,7 +85,7 @@ export default {
       resultId: this.initial.goal_cid || false,
       isLastPrompt: false,
       promptIdx: this.initial.promptIdx  || 0,
-      history: Engine.history.concat(...this.initial.history),
+      history: this.initial.history || Engine.history,
     }
   },
   components: {
@@ -127,7 +127,7 @@ export default {
       this.gameState = 'loading'
       
       if(Store.getStore().history.length === 0){
-        Store.setHistory('[0]').setPromptIdx(0);
+        Store.setCurrentNodeId(0).setPromptIdx(0);
       }
     },
     handleLoadingComplete(){
@@ -220,13 +220,14 @@ export default {
     if(this.initial.promptIdx){
       this.promptIdx = Engine.currentPromptId = this.initial.promptIdx || 0;
     }
+    if(this.initial.currentNodeId > -1){
+      this.handleStartButtonClick();
+      this.dispatchSaving();
+    }
     
     if( this.initial.history.length > 0 ){
       Engine.history = this.initial.history;
       Engine.currentNodeId = this.initial.currentNodeId || 0;
-
-      this.handleStartButtonClick();
-      this.dispatchSaving();
       
       this.isLastPrompt = Engine.isLastPrompt();
     }
@@ -259,16 +260,20 @@ export default {
       Store.setPromptIdx(this.promptIdx);
     });
 
-    EventBus.$on('prevPrompt', () => {      
-      Engine.prevPrompt();
-
+    EventBus.$on('prevPrompt', () => {
       // 20180719 노트 이동 로직 추가
       if(this.isFickle()){
         EventBus.$emit('goPrevNode');
+      } else {
+        // default function
+        Engine.prevPrompt();
       }
 
       if(this.promptIdx === 0){
         this.scene = Engine.getNode();
+        Store
+        .setCurrentNodeId(this.scene.cid)
+        .setHistory(JSON.stringify(Engine.history));
       }
       
       this.promptIdx = Engine.currentPromptId;
@@ -289,10 +294,6 @@ export default {
     
     EventBus.$on('goPrevNode', () => {
       this.scene = Engine.goToParentNode().getNode();
-
-      Store
-      .setCurrentNodeId(this.scene.cid)
-      .setHistory(JSON.stringify(Engine.history));
     })
 
   }
