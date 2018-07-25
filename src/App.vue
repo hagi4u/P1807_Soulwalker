@@ -83,7 +83,7 @@ export default {
       scene: Engine.getNode(this.initial.currentNodeId),
       gameState: 'start',
       resultId: this.initial.goal_cid || false,
-      isLastPrompt: false,
+      isLastPrompt: Engine.isLastPrompt(),
       promptIdx: this.initial.promptIdx  || 0,
       history: this.initial.history || Engine.history,
     }
@@ -127,7 +127,7 @@ export default {
       this.gameState = 'loading'
       
       if(Store.getStore().history.length === 0){
-        Store.setCurrentNodeId(0).setPromptIdx(0);
+        Store.setHistory('[]').setCurrentNodeId(0).setPromptIdx(0);
       }
     },
     handleLoadingComplete(){
@@ -223,13 +223,14 @@ export default {
     if(this.initial.currentNodeId > -1){
       this.handleStartButtonClick();
       this.dispatchSaving();
+
+      Engine.currentNodeId = this.initial.currentNodeId || 0;
+      
+      this.isLastPrompt = Engine.isLastPrompt();
     }
     
     if( this.initial.history.length > 0 ){
       Engine.history = this.initial.history;
-      Engine.currentNodeId = this.initial.currentNodeId || 0;
-      
-      this.isLastPrompt = Engine.isLastPrompt();
     }
 
     if(this.initial.goal_cid){
