@@ -144,6 +144,13 @@ export default {
       if(this.scene.prompt[this.promptIdx].prompt === '$SAVING'){
         this.gameState = 'saving';
       }
+    },
+    handleSystemScreenLoaded(){
+      if(this.scene.prompt[this.promptIdx].user === 'system'){
+        this.delayBuffer = setTimeout(() => {
+          EventBus.$emit('nextPrompt');
+        }, 1500)
+      }
     }
   },
   computed: {
@@ -197,12 +204,7 @@ export default {
     promptIdx(){
       this.isLastPrompt = Engine.isLastPrompt();
       this.dispatchSaving();
-
-      if(this.scene.prompt[this.promptIdx].user === 'system'){
-        this.delayBuffer = setTimeout(() => {
-          EventBus.$emit('nextPrompt');
-        }, 1500)
-      }
+      this.handleSystemScreenLoaded();
     },
     scene(){
       // 20180719 노트 이동 로직 추가
@@ -244,6 +246,8 @@ export default {
       // document.querySelector('.modal-coupon__form-item > input').value = this.endingScene.coupon;
       window.App.ToggleCouponModal('open');
     }
+
+    this.handleSystemScreenLoaded();
   },
   mounted(){
     EventBus.$on('nextPrompt', () => {
