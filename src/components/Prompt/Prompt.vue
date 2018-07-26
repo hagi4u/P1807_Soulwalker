@@ -83,7 +83,7 @@
       }
     },
     beforeMount(){
-      EventBus.$emit('toggleSound', false);
+      // EventBus.$emit('toggleSound', false);
     },
     computed:{
       isShownPrevButton(){

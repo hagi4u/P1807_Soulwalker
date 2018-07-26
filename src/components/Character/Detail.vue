@@ -88,7 +88,7 @@
       this.modelParallaxInstance = new Parallax(this.$refs.model, {
         invertX: false,
         invertY: true,
-      })
+      });
     }
   }
 </script>
@@ -159,9 +159,11 @@
       top:0;
       bottom:0;
       right:48%;
+      left:0;
       z-index:11;
       > img{
         display:block;
+        float:right;
         max-width:none;
         margin-top:-10%;
         height:120%;

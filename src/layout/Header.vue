@@ -1,16 +1,16 @@
 <template>
   <header class="header">
     <h1 class="bi">
-      <a href="http://soulworker.game.onstove.com/">
+      <a :href="getBaseURL()">
         <img src="@/assets/images/common/bi_white.png" alt="Soulwalker" v-if="isSystem">
         <img src="@/assets/images/common/bi.png" alt="Soulwalker" v-else>
       </a>
     </h1>
     <nav class="header__nav">
-      <a href="http://soulworker.game.onstove.com/Promotion/YumaUpgrade/" target="_blank">
+      <a :href="getBaseURL('Promotion/YumaUpgrade/')" target="_blank">
         <img src="@/assets/images/common/ico_iris.png" alt="이리스 승급 업데이트 바로가기">
       </a>
-      <a href="http://soulworker.game.onstove.com/" target="_blank">
+      <a :href="getBaseURL()" target="_blank">
         <img src="@/assets/images/common/ico_homepage.png" alt="홈페이지 바로가기">
       </a>
       <a href="https://www.facebook.com/soulworkerKR/" target="_blank">
@@ -29,6 +29,14 @@
       MuteSwitch
     },
     methods: {
+      getBaseURL(appendingURL = ''){
+        const isNaver = window.location.hostname.indexOf('naver') > -1;
+        const isHangame = window.location.hostname.indexOf('hangame') > -1;
+
+        const baseURL = isNaver ? 'http://soulworker.game.naver.com/' : isHangame ? 'http://soulworker.hangame.com/' : 'http://soulworker.game.onstove.com/';
+
+        return `${baseURL}${appendingURL}`
+      },
       handleMuteClick(boolean){
         this.$emit('onMute', boolean)
       }
