@@ -513,9 +513,9 @@
     "cid": "10",
     "user": "성소",
     "prompt": "짠! 여기가 성소의 마이룸이야!!||어때?? 아주 근사하지??",
-    "bg": "2",
-    "model": "18",
-    "nested": ""
+    "bg": "0",
+    "model": "16",
+    "nested": "room1,room2,room3,room4"
   },
   {
     "cid": "10",
